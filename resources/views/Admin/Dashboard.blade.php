@@ -115,6 +115,14 @@
                 <span class="hide-menu">Revenue</span>
               </a>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link rounded-1 p-2" href="/landing-banner" aria-expanded="false">
+                <span>
+                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+                </span>
+                <span class="hide-menu">Website Settings</span>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->

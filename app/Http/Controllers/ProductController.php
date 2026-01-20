@@ -8,15 +8,63 @@ use App\Models\Categories;
 use App\Models\Product;
 use App\Models\OrderItem;
 use App\Models\Feefixer;
+use App\Models\WebsiteSetting;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 
 class ProductController extends Controller
 {
-    public function AddCategory(Request $request){
+    // public function AddCategory(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    //         'status' => 'required|boolean',
+    //     ]);
+
+    //     if($validator->fails()){
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
+
+    //     $category = new Categories();
+    //     $category->name = $request->input('name');
+    //     $category->slug = Str::slug($request->input('name')); // ✅ generate slug
+    //     $category->status = $request->input('status');
+
+    //     // Optional: handle image upload
+    //     if ($request->hasFile('image')) {
+    //         $imageName = time() . '.' . $request->image->extension();
+    //         $request->image->move(public_path('images/categories'), $imageName);
+    //         $category->image = 'images/categories/' . $imageName;
+    //     }
+
+    //     $category->save();
+
+    //     return redirect('/brand-admin')->with('status', 'Category added successfully!');
+    // }
+
+    // public function ShowCategories()
+    // {
+
+    //     $categories = Categories::all();
+    //     return view('Admin.Productlisting', compact('categories'));
+
+    // }
+
+
+    // ----------------------------------
+    // ----------------------------------
+
+
+
+    public function AddCategory(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255']
+            'name' => ['required', 'string', 'max:255'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|boolean',
         ]);
 
         if($validator->fails()){
@@ -25,18 +73,43 @@ class ProductController extends Controller
 
         $category = new Categories();
         $category->name = $request->input('name');
+        $category->slug = Str::slug($request->input('name')); // ✅ generate slug
+        $category->status = $request->input('status');
+
+        // Save image if uploaded
+        if($request->hasFile('image')){
+            $imageName = time().'.'.$request->image->extension();  
+            $request->image->move(public_path('images/categories'), $imageName);
+            $category->image = 'images/categories/'.$imageName;
+        }
+
         $category->save();
 
-        return redirect('/brand-admin')->with('status', 'Category added successfull!');
+        return redirect('/brand-admin')->with('status', 'Category added successfully!');
     }
 
+    // Fetch active categories for frontend
     public function ShowCategories()
     {
-
-        $categories = Categories::all();
+        $categories = Categories::where('status', 1)->get(); // only active
         return view('Admin.Productlisting', compact('categories'));
-
     }
+
+    // Optional: Show products for a category
+    public function CategoryProducts($slug)
+    {
+        $category = Categories::where('slug', $slug)->firstOrFail();
+        $products = $category->products()->where('status', 1)->get(); // if you have products relation
+        return view('frontend.category-products', compact('category', 'products'));
+    }
+
+
+
+    // ----------------------------------
+    // ----------------------------------
+
+
+
 
     public function ListProduct(Request $request)
     {
@@ -179,44 +252,55 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product added successfully');      
     }
 
-    // public function ShowProducts()
-    // {
-
-    //     $products = Product::all();
-    //     return view('Pages.Index', compact('products'));
-
-    // }
-
-    // public function ShowProductDetail($id)
-    // {
-    //     $products = Product::findOrFail($id);
-    //     $otherProducts = Product::where('id', '!=', $id)->get();
-    
-    //     return view('Pages.Shopdetail', compact('products','otherProducts'));
-    // }
 
     public function ShowProducts()
     {
+        $setting = WebsiteSetting::first();
         $featuredProducts = Product::where('category', 'Featured')
-                                ->where('status', 'active')
-                                ->get();
+            ->where('status', 'active')
+            ->get();
         
-        $categories = Categories::pluck('name');
+        $categories = Categories::where('status', 1)->get();
         
         return view('Pages.Index', [
             'products' => $featuredProducts,
+            'categories' => $categories,
+            'setting' => $setting
+        ]);
+    }
+
+    // public function showCategoryProducts($category)
+    // {
+    //     $products = Product::where('category', $category)
+    //                       ->where('status', 'active')
+    //                       ->get();
+
+    //     $categories = Categories::where('status', 1)->get();
+        
+    //     return view('Pages.Category', compact('products', 'category', 'categories'));
+    // }
+
+    public function showCategoryProducts($category)
+    {
+        $categoryObj = Categories::where('slug', $category)->first();
+
+        if (!$categoryObj) {
+            abort(404, 'Category not found');
+        }
+
+        $products = Product::where('category', $categoryObj->name)
+                            ->where('status', 'active')
+                            ->get();
+
+        $categories = Categories::where('status', 1)->get();
+
+        return view('Pages.Category', [
+            'products' => $products,
+            'category' => $categoryObj->name,
             'categories' => $categories
         ]);
     }
 
-    public function showCategoryProducts($category)
-    {
-        $products = Product::where('category', $category)
-                          ->where('status', 'active')
-                          ->get();
-        
-        return view('Pages.Category', compact('products', 'category'));
-    }
     
     public function showProductDetail($id)
     {

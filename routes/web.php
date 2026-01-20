@@ -160,6 +160,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSpecificationController;
+use App\Http\Controllers\Admin\WebsiteSettingController;
+use Illuminate\Support\Facades\Artisan;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -190,7 +193,7 @@ Route::get('/shop-detail', fn() => view('Pages.Shopdetail'));
 Route::view('/signup', 'Auth.Signup');
 Route::view('/signin', 'Auth.Signin')->name('signin');
 Route::post('/signup', [AuthController::class, 'Signup'])->name('signup');
-Route::post('/signin', [AuthController::class, 'Signin'])->name('signin');
+Route::post('/signin', [AuthController::class, 'Signin'])->name('signin-in');
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
 /*
@@ -325,10 +328,35 @@ Route::view('/edit-product', 'Admin.UpdateProduct')->middleware('admin');
 Route::view('/list-product', 'Admin.Productlisting')->middleware('admin');
 Route::view('/list-category', 'Admin.Addcategory')->middleware('admin');
 
+Route::get('/landing-banner', [WebsiteSettingController::class, 'edit'])->middleware('admin')->name('admin.landing.edit');
+Route::put('/new-landing-banner', [WebsiteSettingController::class, 'update'])->middleware('admin')->name('admin.landing.update');
+
 
 // dummy admin creation routes
 
 Route::get('/admin-to-admin', function() {
     return view('Auth.AdminSignup');
 })->name('admin-to-admin');
-Route::post('/admin-to-admin', [AuthController::class, 'AdminSignup'])->name('admin-to-admin');
+Route::post('/admin-to-admin', [AuthController::class, 'AdminSignup'])->name('admin-to-admin-new');
+
+
+
+// In routes/web.php
+Route::get('/optimize-server', function () {
+    // Clear cache
+    Artisan::call('cache:clear');
+
+    // Clear config cache
+    Artisan::call('config:clear');
+
+    // Clear route cache
+    Artisan::call('route:clear');
+
+    // Clear view cache
+    Artisan::call('view:clear');
+
+    // Optimize (recompile class loader)
+    Artisan::call('optimize');
+
+    return "Server optimization completed successfully!";
+});

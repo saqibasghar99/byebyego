@@ -14,26 +14,32 @@
 <body>
     
     <!-- Main Header -->
-    <header class="main-header">
-        <div class="container">
+    <header class="main-header bg-white">
+        <div class="container-fluid">
             <nav class="navbar navbar-expand-lg">
                 <!-- Logo -->
-                <a class="navbar-brand" href="/">
+                <!-- <a class="navbar-brand" href="/">
                     <img src="https://via.placeholder.com/180x45?text=ShopEase" alt="ShopEase" class="logo-img">
+                </a> -->
+
+                <a class="navbar-brand" href="/" style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.4rem; text-decoration: none;">
+                    <span style="color: #1E73BE;">Bye</span>
+                    <span style="color: #FF7A00;">Bye</span>
+                    <span style="color: #333333;">Go</span>
                 </a>
 
                 <!-- Category Toggle Button -->
-                <button class="category-toggle" id="categoryToggle">
+                <button class="category-toggle p-2 btn-sm" id="categoryToggle">
                     <i class="fas fa-bars"></i>
                     <span class="mb-sm-1">Categories</span>
                 </button>
 
                 <!-- Premium Search Bar -->
-                <div class="search-container">
+                <div class="search-container" style="position: relative;">
                     <form class="search-form" action="#">
                         <input type="text" id="searchInput" class="form-control shadow-none search-input" autocomplete="off" placeholder="Search products...">
                         <ul class="rounded-2" id="searchResults"></ul>
-                        <button class="btn search-btn" type="submit">
+                        <button class="btn search-btn btn-sm" type="submit">
                             <i class="fas fa-search"></i>
                         </button>
                     </form>
@@ -77,41 +83,19 @@
             </nav>
         </div>
 
-        <!-- Category Navigation -->
-        <div class="category-nav d-sm-block d-none">
+        
+        <div class="category-nav d-sm-block d-none" id="categories">
             <div class="container">
                 <div class="nav">
-                    <a class="nav-link active" href="{{ route('category.products', 'arrivals') }}">New Arrivals</a>
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="womenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Electronics
+                    @foreach($categories as $category)
+                        <a class="nav-link text-white" href="{{ route('category.products', $category->slug) }}">
+                            {{ $category->name }}
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="womenDropdown">
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'toys') }}">Toys</a></li>
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'watches') }}">Watches</a></li>
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'headphones') }}">Headphones</a></li>
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'gifts') }}">Gift</a></li>
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'accessories') }}">Accessories</a></li>
-                        </ul>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="menDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Clothing
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="menDropdown">
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'men') }}">Mens</a></li>
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'women') }}">Womens</a></li>
-                            <li><a class="dropdown-item" href="{{ route('category.products', 'beauty') }}">Jewellery</a></li>
-                        </ul>
-                    </div>
-                    <a class="nav-link" href="{{ route('category.products', 'electronics') }}">Electronics</a>
-                    <a class="nav-link" href="{{ route('category.products', 'home') }}">Home & Kitchen</a>
-                    <a class="nav-link" href="{{ route('category.products', 'beauty') }}">Beauty</a>
-                    <a class="nav-link" href="{{ route('category.products', 'gifts') }}">Gift</a>
-                    <a class="nav-link" href="{{ route('category.products', 'watches') }}">Watches</a>
+                    @endforeach
                 </div>
             </div>
         </div>
+
     </header>
     
     <!-- Category Sidebar -->
@@ -123,23 +107,11 @@
             </button>
         </div>
         
+        
         <ul class="sidebar-categories">
-            <li><a href="{{ route('category.products', 'arrivals') }}"><i class="fas fa-star"></i> New Arrivals</a></li>
-            <li><a href="{{ route('category.products', 'women') }}"><i class="fas fa-tshirt"></i> Women's Fashion</a></li>
-            <li><a href="{{ route('category.products', 'men') }}"><i class="fas fa-male"></i> Men's Fashion</a></li>
-            <li><a href="{{ route('category.products', 'electronics') }}"><i class="fas fa-mobile-alt"></i> Electronics</a></li>
-            <li><a href="{{ route('category.products', 'accessories') }}"><i class="fas fa-hat-cowboy"></i> Accessories</a></li>
-            <li><a href="{{ route('category.products', 'home') }}"><i class="fas fa-home"></i> Home & Kitchen</a></li>
-            <li><a href="{{ route('category.products', 'watches') }}"><i class="fas fa-clock"></i> Watches</a></li>
-            <li><a href="{{ route('category.products', 'beauty') }}"><i class="fas fa-spa"></i> Beauty & Health</a></li>
-            <li><a href="{{ route('category.products', 'toys') }}"><i class="fas fa-gamepad"></i> Toys & Games</a></li>
-            <li><a href="{{ route('category.products', 'wedding') }}"><i class="fas fa-glass-cheers"></i> Weddings</a></li>
-            <li><a href="{{ route('category.products', 'shoes') }}"><i class="fas fa-shoe-prints"></i> Shoes</a></li>
-            <li><a href="{{ route('category.products', 'books') }}"><i class="fas fa-book"></i> Books & Films</a></li>
-            <li><a href="{{ route('category.products', 'bags') }}"><i class="fas fa-dumbbell"></i> Bags & Purses</a></li>
-            <li><a href="{{ route('category.products', 'headphones') }}"><i class="fas fa-headphones"></i> Headphones</a></li>
-            <li><a href="{{ route('category.products', 'pets') }}"><i class="fas fa-paw"></i> Pets</a></li>
-            <li><a href="{{ route('category.products', 'beauty') }}"><i class="fas fa-gem"></i> Jewllery</a></li>
+            @foreach($categories as $category)
+                <li><a href="{{ route('category.products', $category->slug) }}"><i class="fas fa-gem"></i> {{ $category->name }}</a></li>
+            @endforeach
         </ul>
         
         <div class="sidebar-footer">
@@ -160,50 +132,85 @@
     
     <script>
 
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('searchInput');
-    const resultsList = document.getElementById('searchResults');
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const resultsList = document.getElementById('searchResults');
 
-    searchInput.addEventListener('input', function () {
-        let query = this.value;
+            // Style the results container (modern look)
+            resultsList.style.position = 'absolute';
+            resultsList.style.top = '100%';
+            resultsList.style.left = '0';
+            resultsList.style.right = '0';
+            resultsList.style.background = '#ffffff';
+            resultsList.style.border = '1px solid #ddd';
+            resultsList.style.borderRadius = '8px';
+            resultsList.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            resultsList.style.padding = '5px 0';
+            resultsList.style.zIndex = '1050';
+            resultsList.style.maxHeight = '300px';
+            resultsList.style.overflowY = 'auto';
+            resultsList.style.display = 'none';
 
-        if (query.length > 1) {
-            fetch(`/live-search?query=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    resultsList.innerHTML = '';
-                    resultsList.style.display = 'block';
+            searchInput.addEventListener('input', function () {
+                let query = this.value;
 
-                    if (data.length > 0) {
-                        data.forEach(product => {
-                            resultsList.innerHTML += `<li>
-                                <a href="/product/${product.id}">
-                                    <div style="display: flex; align-items: center;">
-                                        <img src="/storage/${product.image}" alt="${product.productname}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
-                                        <span>${product.productname}</span>
-                                        <span class="mx-2 border-start border-1 border-secondary px-2">${product.tags}</span>
-                                        <span class="mx-2 border-start border-1 border-secondary px-2"> Rs.${product.totalprice}</span>
-                                    </div>
-                                </a>
-                            </li>`;
+                if (query.length > 1) {
+                    fetch(`/live-search?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            resultsList.innerHTML = '';
+                            resultsList.style.display = 'block';
+
+                            if (data.length > 0) {
+                                data.forEach(product => {
+                                    resultsList.innerHTML += `
+                                        <li style="list-style: none;">
+                                            <a href="/product/${product.id}" 
+                                            style="display: flex; align-items: center; padding: 5px 8px; text-decoration: none; color: #333; transition: background 0.2s; border-bottom: 1px solid #f0f0f0;">
+                                                <img src="/storage/${product.image}" 
+                                                    alt="${product.productname}" 
+                                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 12px; flex-shrink: 0;">
+                                                <div style="display: flex; flex-direction: column;">
+                                                    <span style="font-weight: 500; font-size: 0.95rem;">${product.productname}</span>
+                                                    <span style="font-size: 0.85rem; color: #666;">${product.tags}</span>
+                                                </div>
+                                                <span style="margin-left:auto; font-weight: 600; color: #FF7A00;">Rs. ${product.totalprice}</span>
+                                            </a>
+                                        </li>
+                                    `;
+                                });
+                            } else {
+                                resultsList.innerHTML = `
+                                    <li style="list-style: none; padding: 10px; text-align: center; color: #999;">
+                                        No products found
+                                    </li>
+                                `;
+                            }
+
+                            // Hover effect for each link
+                            resultsList.querySelectorAll('a').forEach(item => {
+                                item.addEventListener('mouseover', () => {
+                                    item.style.background = '#f5f5f5';
+                                });
+                                item.addEventListener('mouseout', () => {
+                                    item.style.background = '#ffffff';
+                                });
+                            });
                         });
-                    } else {
-                        resultsList.innerHTML = '<li style="background-color: #fff; padding: 8px;">No products found</li>';
-                    }
-                });
-        } else {
-            resultsList.innerHTML = '';
-            resultsList.style.display = 'none';
-        }
-    });
+                } else {
+                    resultsList.innerHTML = '';
+                    resultsList.style.display = 'none';
+                }
+            });
 
-    // Hide results when clicking outside
-    document.addEventListener('click', function (e) {
-        if (!searchInput.contains(e.target) && !resultsList.contains(e.target)) {
-            resultsList.style.display = 'none';
-        }
-    });
-});
+            // Hide results when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!searchInput.contains(e.target) && !resultsList.contains(e.target)) {
+                    resultsList.style.display = 'none';
+                }
+            });
+        });
+
 
         // Category Sidebar Toggle
         const categoryToggle = document.getElementById('categoryToggle');

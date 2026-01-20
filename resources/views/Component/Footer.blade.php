@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<footer class="text-light pt-5 pb-3" style="background: linear-gradient(to right,rgb(66, 64, 87),rgb(51, 49, 78),rgb(65, 65, 87));">
+<footer class="text-light pt-5 pb-3" style="background-color: #333333;">
     <div class="container">
         <div class="row">
 

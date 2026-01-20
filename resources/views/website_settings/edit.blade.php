@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -182,93 +183,87 @@
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">All Orders</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Website Settings</h6>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="text-white" style="background-color: #232323">Order ID</th>
-                                    <th class="text-white" style="background-color: #232323">Name</th>
-                                    <th class="text-white" style="background-color: #232323">Email</th>
-                                    <th class="text-white" style="background-color: #232323">Phone</th>
-                                    <th class="text-white" style="background-color: #232323">Country</th>
-                                    <th class="text-white" style="background-color: #232323">Quantity</th>
-                                    <th class="text-white" style="background-color: #232323">Total_amount</th>
-                                    <th class="text-white" style="background-color: #232323">Ordered_At</th>
-                                    <th class="text-white" style="background-color: #232323">Payment_Status</th>
-                                    <th class="text-white" style="background-color: #232323">Status</th>
-                                    <th class="text-white" style="background-color: #232323">Update Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($all_orders as $orders)
-                                <tr>
-                                    <td class="fw-bold">#{{ $orders->order_number }}</td>
-                                    <td>{{ $orders->billing_first_name }}&nbsp{{ $orders->billing_last_name }}</td>
-                                    <td>{{ $orders->billing_email }}</td>
-                                    <td>{{ $orders->billing_phone }}</td>
-                                    <td>{{ $orders->billing_country }}</td>
-                                    <td>{{ $orders->quantity }}</td>
-                                    <td>Rs. {{ $orders->total_amount }}</td>
-                                    <td>{{ $orders->created_at->format('d-M-Y h:i A') ?? 'N/A' }}</td>
-                                    <td>
-                                      @php
-                                        $payment_status = ucfirst($orders->payment_status);
-                                      @endphp
+                <div class="container mt-2">
+                    <div class="container mt-2">
 
-                                      @if($payment_status == "Paid")
-                                        <span class="badge bg-success text-white">{{ $payment_status }}</span>
-                                      @elseif($payment_status == "Unpaid")
-                                        <span class="badge bg-warning text-white">{{ $payment_status }}</span>
-                                      @else
-                                        <span class="badge bg-danger text-white">{{ $payment_status }}</span>
-                                      @endif
-                                    </td>
-                                    <td>
-                                      @php
-                                        $status = ucfirst($orders->status);
-                                      @endphp
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
 
-                                      @if($status == "Pending")
-                                        <span class="badge bg-warning text-white">{{ $status }}</span>
-                                      @elseif($status == "Processing")
-                                        <span class="badge bg-primary text-white">{{ $status }}</span>
-                                      @elseif($status == "Shipped")
-                                        <span class="badge bg-info text-white">{{ $status }}</span>
-                                      @elseif($status == "Delivered")
-                                        <span class="badge bg-success text-white">{{ $status }}</span>
-                                      @else
-                                        <span class="badge bg-danger text-white">{{ $status }}</span>
-                                      @endif
-                                    </td>
-                                    <td>
-                                        <form class="d-flex flew-row" action="{{ route('orders.updateStatus', $orders->id) }}" method="POST">
-                                            @csrf
-                                            <select class="px-1 rounded-0" name="status" class="form-control" id="" required>
-                                                <option value="">Order Status</option>
-                                                <option value="pending" {{ $orders->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="processing" {{ $orders->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                                                <option value="shipped" {{ $orders->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
-                                                <option value="delivered" {{ $orders->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
-                                                <option value="cancelled" {{ $orders->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                            </select>
-                                            <select class="px-1 mx-1 rounded-0" name="payment_status" class="form-control" id="" required>
-                                                <option value="">Payment Status</option>
-                                                <option value="paid" {{ $orders->status == 'paid' ? 'selected' : '' }}>Paid</option>
-                                                <option value="unpaid" {{ $orders->status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
-                                                <option value="refunded" {{ $orders->status == 'refunded' ? 'selected' : '' }}>Refunded</option>
-                                            </select>
-                                            <button type="submit" class="btn btn-dark rounded-0 btn-sm my-auto mx-1 p-2">Update</button>
-                                            <a href="{{ route('shipping.label.view', $orders->id) }}" target="blank" class="btn btn-sm btn-success" title="Shipping Label"><i class="fas fa-tag"></i> Label</a>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <form action="{{ route('admin.landing.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label for="landing_banner_image" class="form-label">Banner Image</label>
+                            <input type="file" name="landing_banner_image" class="form-control">
+                            @if($setting?->landing_banner_image)
+                                <img src="{{ Storage::url($setting->landing_banner_image) }}" 
+                                    alt="Banner" class="img-fluid mt-2" style="max-height: 200px;">
+                            @endif
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Hero Title</label>
+                            <input type="text" name="hero_title" value="{{ old('hero_title', $setting?->hero_title) }}" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Hero Subtitle</label>
+                            <textarea name="hero_subtitle" class="form-control">{{ old('hero_subtitle', $setting?->hero_subtitle) }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Button Text</label>
+                            <input type="text" name="hero_button_text" value="{{ old('hero_button_text', $setting?->hero_button_text) }}" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Button Link</label>
+                            <input type="url" name="hero_button_link" value="{{ old('hero_button_link', $setting?->hero_button_link) }}" class="form-control">
+                        </div>
+
+                        <hr>
+
+                      <h5>Banner Text Colors</h5>
+
+                      <div class="mb-3">
+                          <label class="form-label">Hero Title Color</label>
+                          <input type="text" name="hero_title_color"
+                                class="form-control"
+                                placeholder="#ffffff"
+                                value="{{ session('hero_title_color', '#ffffff') }}">
+                      </div>
+
+                      <div class="mb-3">
+                          <label class="form-label">Hero Subtitle Color</label>
+                          <input type="text" name="hero_subtitle_color"
+                                class="form-control"
+                                placeholder="#f1f1f1"
+                                value="{{ session('hero_subtitle_color', '#f1f1f1') }}">
+                      </div>
+
+                      <div class="mb-3">
+                          <label class="form-label">Button Text Color</label>
+                          <input type="text" name="hero_button_text_color"
+                                class="form-control"
+                                placeholder="#ffffff"
+                                value="{{ session('hero_button_text_color', '#ffffff') }}">
+                      </div>
+
+                      <div class="mb-3">
+                          <label class="form-label">Button Background Color</label>
+                          <input type="text" name="hero_button_bg_color"
+                                class="form-control"
+                                placeholder="#000000"
+                                value="{{ session('hero_button_bg_color', '#000000') }}">
+                      </div>
+
+
+                        <button type="submit" class="btn btn-primary my-3">Update Banner</button>
+                    </form>
                 </div>
             </div>
         </div>

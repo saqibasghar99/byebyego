@@ -168,18 +168,31 @@
       <!--  Header End -->
 
       <div class="container-fluid">
-        <h2>List Category</h2>
-        <form action="{{route('add-category')}}" method="POST">
-            @csrf
-            <div class="form-group inline">
-                <div>
-                    <label for="name"> Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter category name">
-                </div>
-            </div>
-            <button type="submit" class="button" style="background-color: #232323">Submit Category</button>
-        </for>
-    </div>
+    <h2>Add Category</h2>
+    <form action="{{ route('add-category') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group mb-3">
+            <label for="name">Category Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter category name" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="image">Category Image (optional)</label>
+            <input type="file" id="image" name="image" class="form-control" accept="image/*">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="status">Status</label>
+            <select id="status" name="status" class="form-control">
+                <option value="1" selected>Active</option>
+                <option value="0">Inactive</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Submit Category</button>
+    </form>
+</div>
+
 
       </div>
     </div>
