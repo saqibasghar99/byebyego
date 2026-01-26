@@ -27,7 +27,7 @@
     <div class="container">
         <div class="section-header">
             <h2 class="section-title">Our Featured Products</h2>
-            <p class="section-subtitle text-dark">Discover our carefully curated collection of premium products</p>
+            <p class="section-subtitle text-dark d-none">Discover our carefully curated collection of premium products</p>
         </div>
         
         <div class="row" id="featured-products">

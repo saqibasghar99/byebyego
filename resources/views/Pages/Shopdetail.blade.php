@@ -65,7 +65,7 @@
                                     $dicountprice = $products->totalprice - ($products->totalprice * $products->discount / 100);
                                 @endphp
                                 <h4 class="price"><span>Rs. {{ number_format($dicountprice, 2) }}</span></h4>
-                                <p class="mx-2 after-price"><span class="" style="text-decoration: line-through;">Rs.{{ number_format($products->totalprice, 2) }}</span></p>
+                                <p class="m-2 after-price"><span class="" style="text-decoration: line-through;">Rs.{{ number_format($products->totalprice, 2) }}</span></p>
                                 @else
                                 <h4 class="price"><span>Rs. {{ number_format($products->totalprice, 2) }}</span></h4>
                             @endif
@@ -109,7 +109,7 @@
                                 <input type="hidden" name="image" value="{{ Storage::url($products->image) }}">
                                 <input type="hidden" name="quantity" id="buyNowQuantity" value="1">
                                 <input type="hidden" name="size" id="buyNowSize" value="">
-                                <button type="button" id="buy-now-btn" class="buy-cart-btn btn btn-block text-white bg-dark buy-now-button" data-id="{{ $products->id }}">
+                                <button type="button" id="buy-now-btn" class="buy-cart-btn rounded-0 btn btn-block text-white bg-dark buy-now-button" data-id="{{ $products->id }}">
                                     </i>Buy Now
                                 </button>
                             </form>
@@ -121,9 +121,11 @@
                                 <input type="hidden" name="image" value="{{ Storage::url($products->image) }}">
                                 <input type="hidden" name="quantity" id="formQuantity" value="">
                                 <input type="hidden" name="size" id="formSize" value="">
-                                <button type="button" id="add-to-cart-btn" class="shadow-none border-0 d-flex text-white m-auto text-center flex-row btn btn-block add-to-cart-button add-cart-btn" data-id="{{ $products->id }}" >
+                                <button type="button" id="add-to-cart-btn"
+                                    class="add-cart-btn shadow-none border-0 d-flex add-to-cart-button align-items-center justify-content-center"
+                                    data-id="{{ $products->id }}">
                                     <span class="material-icons text-white mx-1">shopping_cart</span>
-                                    Bag It
+                                    Cart It
                                 </button>
                             </form>
                         </div>

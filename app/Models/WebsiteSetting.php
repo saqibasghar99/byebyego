@@ -25,5 +25,7 @@ class WebsiteSetting extends Model
         'instagram_url',
         'linkedin_url',
         'footer_text',
+        'show_hero_text',
+        'show_hero_button',
     ];
 }

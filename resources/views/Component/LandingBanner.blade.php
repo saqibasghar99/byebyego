@@ -28,24 +28,29 @@
 
         <div class="decorative-line"></div>
 
-        <div class="collection-header">
-            {{ $setting->hero_title ?? 'SUMMER COLLECTION' }}
-        </div>
+        @if($setting && $setting->show_hero_text)
+            <div class="collection-header">
+                {{ $setting->hero_title ?? 'SUMMER COLLECTION' }}
+            </div>
 
-        <h2 class="collection-title">
-            {{ $setting->hero_subtitle ?? 'Shop the trends you love in ' }}
-            <span id="current-year"></span>
-        </h2>
+            <h2 class="collection-title">
+                {{ $setting->hero_subtitle ?? 'Shop the trends you love in ' }}
+                <span id="current-year"></span>
+            </h2>
 
-        <p class="collection-subtitle">
-            Enjoy unbeatable prices on handpicked collections, featuring the latest trends,
-            all delivered right to your doorstep with ease
-        </p>
+            <p class="collection-subtitle">
+                Enjoy unbeatable prices on handpicked collections, featuring the latest trends,
+                all delivered right to your doorstep with ease
+            </p>
+        @endif
 
-        <a href="{{ $setting->hero_button_link ?? '#featured-products' }}"
-        class="shop-now-btn" target="_blank">
-            {{ $setting->hero_button_text ?? 'SHOP NOW' }}
-        </a>
+        @if($setting && $setting->show_hero_button)
+            <a href="{{ $setting->hero_button_link ?? '#featured-products' }}"
+            class="shop-now-btn" target="_blank">
+                {{ $setting->hero_button_text ?? 'SHOP NOW' }}
+            </a>
+        @endif
+
     </div>
 
 

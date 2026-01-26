@@ -20,7 +20,7 @@
 
     @include('component.header')
 
-    <section class="watches-hero animate__animated animate__fadeIn">
+    <section class="watches-hero animate__animated animate__fadeIn d-none">
         <img src="https://www.hotwaxsystems.com/hubfs/Imported_Blog_Media/AdobeStock_72884317-3.jpeg" alt="Banner"
             class="hero-bg">
         <div class="overlay"></div>
@@ -94,16 +94,13 @@
                                         <input type="hidden" name="image"
                                             value="{{ Storage::url($product->image) }}">
                                         <div class="cart-buttons d-flex justify-content-between gap-md-2 gap-1">
-                                            <a href="{{ route('product.detail', $product->id) }}"
-                                                class="border text-center text-decoration-none btn-view">
-                                                <i class="fas fa-eye"></i> View
-                                            </a>
                                             <button type="button"
-                                                class="btn add-to-cart-button shadow-none btn-outline-light"
+                                                class="btn add-to-cart-button shadow-none btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2"
                                                 data-id="{{ $product->id }}" style="background-color: #fa561b;">
-                                                <span class="material-icons text-white m-auto">shopping_cart</span>
+                                                <span class="text-white">Cart It</span>
+                                                <span class="material-icons text-white">shopping_cart</span>
                                             </button>
-                                        </div>
+                                        </div>  
                                     </form>
                                 </div>
                             </div>

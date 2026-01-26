@@ -329,7 +329,7 @@ Route::view('/list-product', 'Admin.Productlisting')->middleware('admin');
 Route::view('/list-category', 'Admin.Addcategory')->middleware('admin');
 
 Route::get('/landing-banner', [WebsiteSettingController::class, 'edit'])->middleware('admin')->name('admin.landing.edit');
-Route::put('/new-landing-banner', [WebsiteSettingController::class, 'update'])->middleware('admin')->name('admin.landing.update');
+Route::match(['post','put'], '/landing-banner', [WebsiteSettingController::class, 'update'])->middleware('admin')->name('admin.landing.update');
 
 
 // dummy admin creation routes

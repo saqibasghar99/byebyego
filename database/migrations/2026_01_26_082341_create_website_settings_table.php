@@ -20,9 +20,11 @@ return new class extends Migration
             $table->string('hero_subtitle')->nullable();
             $table->string('hero_button_text')->nullable();
             $table->string('hero_button_link')->nullable();
+            $table->boolean('show_hero_text')->nullable()->default(true);
+            $table->boolean('show_hero_button')->nullable()->default(true);
 
             // Optional fields for future
-            $table->string('contact_email')->nullable();
+            $table->string('contact_email')->nullable();    
             $table->string('contact_phone')->nullable();
             $table->string('facebook_url')->nullable();
             $table->string('tiktok_url')->nullable();

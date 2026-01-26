@@ -225,6 +225,18 @@
                             <input type="url" name="hero_button_link" value="{{ old('hero_button_link', $setting?->hero_button_link) }}" class="form-control">
                         </div>
 
+                        <div class="form-check mb-3">
+                            <input type="hidden" name="show_hero_text" value="0">
+                            <input class="form-check-input" type="checkbox" name="show_hero_text" id="show_hero_text" value="1" {{ $setting?->show_hero_text ? 'checked' : '' }}>
+                            <label class="form-check-label" for="show_hero_text">Show Hero Text</label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input type="hidden" name="show_hero_button" value="0">
+                            <input class="form-check-input" type="checkbox" name="show_hero_button" id="show_hero_button" value="1" {{ $setting?->show_hero_button ? 'checked' : '' }}>
+                            <label class="form-check-label" for="show_hero_button">Show Hero Button</label>
+                        </div>
+
                         <hr>
 
                       <h5>Banner Text Colors</h5>

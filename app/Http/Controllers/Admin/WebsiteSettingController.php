@@ -24,9 +24,19 @@ class WebsiteSettingController extends Controller
             'hero_subtitle' => 'nullable|string|max:500',
             'hero_button_text' => 'nullable|string|max:100',
             'hero_button_link' => 'nullable|url',
+            'show_hero_text' => 'nullable|boolean',
+            'show_hero_button' => 'nullable|boolean',
         ]);
 
-        $setting = WebsiteSetting::first() ?? new WebsiteSetting();
+        $setting = WebsiteSetting::first();
+
+        if (!$setting) {
+            $setting = WebsiteSetting::create([
+                'show_hero_text' => true,
+                'show_hero_button' => true,
+            ]);
+        }
+
 
         if ($request->hasFile('landing_banner_image')) {
 
@@ -44,6 +54,8 @@ class WebsiteSettingController extends Controller
         $setting->hero_subtitle = $request->hero_subtitle;
         $setting->hero_button_text = $request->hero_button_text;
         $setting->hero_button_link = $request->hero_button_link;
+        $setting->show_hero_text   = $request->input('show_hero_text', 1);  // defaults to true if missing
+        $setting->show_hero_button = $request->input('show_hero_button', 1);
 
         $setting->save();
 
@@ -58,46 +70,4 @@ class WebsiteSettingController extends Controller
         return redirect()->back()->with('success', 'Landing banner updated successfully.');
     }
 
-
-    // public function update(Request $request)
-    // {
-    //     $request->validate([
-    //         'landing_banner_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-    //         'hero_title' => 'nullable|string|max:255',
-    //         'hero_subtitle' => 'nullable|string|max:500',
-    //         'hero_button_text' => 'nullable|string|max:100',
-    //         'hero_button_link' => 'nullable|url',
-    //     ]);
-
-    //     $setting = WebsiteSetting::first();
-
-    //     if (!$setting) {
-    //         $setting = new WebsiteSetting();
-    //     }
-
-    //     if ($request->hasFile('landing_banner_image')) {
-    //         // Delete old image if exists
-    //         if ($setting->landing_banner_image) {
-    //             // Convert storage path to public path before deleting
-    //             Storage::delete($setting->landing_banner_image);
-    //         }
-
-    //         // Store in 'public/banner', this will be accessible via storage link;
-    //         $path = $request->file('landing_banner_image')
-    //            ->store('banner', 'public');
-
-    //         // Save only the path relative to 'public' for easier access
-    //         $setting->landing_banner_image = str_replace('public/', '', $path); 
-    //     }
-
-
-    //     $setting->hero_title = $request->hero_title;
-    //     $setting->hero_subtitle = $request->hero_subtitle;
-    //     $setting->hero_button_text = $request->hero_button_text;
-    //     $setting->hero_button_link = $request->hero_button_link;
-
-    //     $setting->save();
-
-    //     return redirect()->back()->with('success', 'Landing banner updated successfully.');
-    // }
 }
