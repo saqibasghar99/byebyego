@@ -50,7 +50,7 @@
                         $shipping_tax_added = true;
                     }
 
-                    $grand_total = $totalprice + $total_shipp_and_tax_fee;
+                    $grand_total = $totalprice + $total_shipp_and_tax_fee - $totalDiscount;
                 @endphp
 
                 <li class="list-group-item mt-md-4 p-4 d-flex justify-content-between lh-condensed">
@@ -137,17 +137,14 @@
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <select class="custom-select d-block w-100 shadow-none" name="billing_country" id="country" required>
-                            <option value="">Select Country</option>
-                            <option>Pakistan</option>
+                            <option value="Pakistan">Pakistan</option>
                         </select>
                         <small>Currently available only in Pakistan!</small>
                         <div class="invalid-feedback">Please select a valid country.</div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <select class="custom-select d-block w-100 shadow-none" name="billing_state" id="state" >
-                            <option value="">Select Region</option>
-                            <option>Punjab</option>
-                            <option>Sindh</option>
+                            <option value="Punjab">Punjab</option>
                         </select>
                         <div class="invalid-feedback">Please provide a valid state.</div>
                     </div>
@@ -188,15 +185,12 @@
                     <div class="row">
                         <div class="col-md-5 mb-3">
                             <select class="custom-select d-block w-100 shadow-none" name="shipping_country" id="shippingCountry" >
-                                <option value="">Select Country</option>
-                                <option>Pakistan</option>
+                                <option value="Pakistan">Pakistan</option>
                             </select>
                         </div>
                         <div class="col-md-4 mb-3">
                             <select class="custom-select d-block w-100 shadow-none" name="shipping_state" id="shippingState">
-                                <option value="">Select Region</option>
-                                <option>Punjab</option>
-                                <option>Sindh</option>
+                                <option value="Punjab">Punjab</option>
                             </select>
                         </div>
                         <div class="col-md-3 mb-3">

@@ -134,6 +134,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+
+const CURRENCY = 'Rs.';
+
 document.addEventListener('DOMContentLoaded', function() {
     // Quantity button handlers
     document.querySelectorAll('.quantity-btn').forEach(button => {
@@ -160,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const totalPrice = priceAfterDiscount * quantity;
 
             // Update item total price display
-            document.getElementById(`total-price-${id}`).textContent = `$${totalPrice.toFixed(2)}`;
-            document.getElementById(`summary-price-${id}`).textContent = `$${totalPrice.toFixed(2)}`;
+            document.getElementById(`total-price-${id}`).textContent = `${CURRENCY}${totalPrice.toFixed(2)}`;
+            document.getElementById(`summary-price-${id}`).textContent = `${CURRENCY}${totalPrice.toFixed(2)}`;
 
             // Update the summary totals
             updateSummaryTotals();
@@ -179,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculate subtotal and discount from all items
         document.querySelectorAll('.total-price').forEach(item => {
             const priceText = item.textContent.trim();
-            const price = parseFloat(priceText.replace('$', '').replace(',', '').trim());
+            const price = parseFloat(priceText.replace(CURRENCY, '').replace(',', '').trim());
             if (!isNaN(price)) {
                 subtotal += price;
             }
@@ -197,7 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Use the PHP-calculated shipping and tax
         shippingTax = {{ $total_shipp_and_tax_fee }};
 
-        const grandTotal = subtotal + shippingTax;
+        // const grandTotal = subtotal + shippingTax;
+        const grandTotal = subtotal - totalDiscount + shippingTax;
+
 
         // Update summary rows
         const summaryRows = document.querySelectorAll('.summary-card tbody tr');
@@ -215,11 +220,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (discountRowIndex === -1) {
                 // Create new discount row before shipping
                 const newRow = document.createElement('tr');
-                newRow.innerHTML = `<td>Discount</td><td class="text-end">-\$${totalDiscount.toFixed(2)}</td>`;
+                newRow.innerHTML = `<td>Discount</td><td class="text-end">-${CURRENCY}${totalDiscount.toFixed(2)}</td>`;
                 summaryRows[summaryRows.length - 2].parentNode.insertBefore(newRow, summaryRows[summaryRows.length - 2]);
             } else {
                 // Update existing discount row
-                summaryRows[discountRowIndex].querySelector('td:last-child').textContent = `-\$${totalDiscount.toFixed(2)}`;
+                summaryRows[discountRowIndex].querySelector('td:last-child').textContent = `-${CURRENCY}${totalDiscount.toFixed(2)}`;
             }
         } else if (discountRowIndex !== -1) {
             // Remove discount row if no discount
@@ -227,10 +232,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Update shipping and tax
-        summaryRows[summaryRows.length - 2].querySelector('td:last-child').textContent = `$${shippingTax.toFixed(2)}`;
+        summaryRows[summaryRows.length - 2].querySelector('td:last-child').textContent = `${CURRENCY}${shippingTax.toFixed(2)}`;
 
         // Update grand total
-        summaryRows[summaryRows.length - 1].querySelector('td:last-child').textContent = `$${grandTotal.toFixed(2)}`;
+        summaryRows[summaryRows.length - 1].querySelector('td:last-child').textContent = `${CURRENCY}${grandTotal.toFixed(2)}`;
     }
 
     function updateCartQuantity(itemId, quantity) {

@@ -258,12 +258,12 @@
 @endif
 
         <!-- Explore More Products Section -->
-<div class="explore-more-section">
+<!-- <div class="explore-more-section">
     <div class="section-title">
         <h3>More {{ $products->category }} Products</h3>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5">
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         @foreach ($relatedProducts as $relatedProduct)
             <div class="col more-explore-col exp-products">
                 <div class="product-item shadow h-100 d-flex flex-column justify-content-between">
@@ -278,6 +278,8 @@
                     </a>
 
                     <div class="product-info mt-2">
+                        <span class="product-category  mt-2 text-muted">{{ $relatedProduct->category }}</span>
+
                         <a href="{{ route('product.detail', $relatedProduct->id) }}" class="text-decoration-none product-name d-block">{{ $relatedProduct->productname }}</a>
 
                         @if($relatedProduct->discount > 0)
@@ -292,18 +294,15 @@
                             <div><span class="current-price product-price before-off">Rs. {{ number_format($relatedProduct->totalprice, 2) }}</span></div>
                         @endif
 
-                        <div class="product-actions mt-3 d-flex justify-content-between">
-                            <a href="{{ route('product.detail', $relatedProduct->id) }}" class="text-decoration-none border btn-view">
-                                <i class="fas fa-eye"></i> View
-                            </a>
-
-                            <form class="add-to-cart-form" id="addToCartForm-{{ $relatedProduct->id }}">
+                        <div class="product-actions mt-3">
+                            <form class="add-to-cart-form w-100" id="addToCartForm-{{ $relatedProduct->id }}">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $relatedProduct->id }}">
                                 <input type="hidden" name="name" value="{{ $relatedProduct->productname }}">
                                 <input type="hidden" name="price" value="{{ $relatedProduct->totalprice }}">
                                 <input type="hidden" name="image" value="{{ Storage::url($relatedProduct->image) }}">
                                 <button type="button" class="btn-cart add-to-cart-button" data-id="{{ $relatedProduct->id }}">
+                                    <span>Cart It</span>
                                     <span class="material-icons">shopping_cart</span>
                                 </button>
                             </form>
@@ -313,7 +312,62 @@
             </div>
         @endforeach
     </div>
+</div> -->
+
+<div class="explore-more-section">
+    <div class="section-title">
+        <h3>More {{ $products->category }} Products</h3>
+    </div>
+
+    <div class="product-grid gap-md-4 gap-0">
+        @foreach ($relatedProducts as $relatedProduct)
+            <div class="product-item shadow h-100 d-flex flex-column justify-content-between">
+                @if($relatedProduct->discount > 0)
+                    <span class="product-badge">-{{ $relatedProduct->discount }}% OFF</span>
+                @endif
+
+                <a href="{{ route('product.detail', $relatedProduct->id) }}">
+                    <div class="product-img-container">
+                        <img src="{{ Storage::url($relatedProduct->image) }}" alt="{{ $relatedProduct->productname }}" class="product-img">
+                    </div>
+                </a>
+
+                <div class="product-info mt-2">
+                    <span class="product-category text-muted">{{ $relatedProduct->category }}</span>
+
+                    <a href="{{ route('product.detail', $relatedProduct->id) }}" class="text-decoration-none product-name d-block">{{ $relatedProduct->productname }}</a>
+
+                    @if($relatedProduct->discount > 0)
+                        @php
+                            $dicountprice = $relatedProduct->totalprice - ($relatedProduct->totalprice * $relatedProduct->discount / 100);
+                        @endphp
+                        <div class="d-flex flex-md-row flex-column justify-content-between">
+                            <div class="current-price product-price after-off">Rs. {{ number_format($dicountprice, 2) }}</div>
+                            <small class="before-off text-muted mx-md-0 mx-2" style="text-decoration: line-through;">Rs. {{ number_format($relatedProduct->totalprice, 2) }}</small>
+                        </div>
+                    @else
+                        <div><span class="current-price product-price before-off">Rs. {{ number_format($relatedProduct->totalprice, 2) }}</span></div>
+                    @endif
+
+                    <div class="product-actions mt-3">
+                        <form class="add-to-cart-form w-100" id="addToCartForm-{{ $relatedProduct->id }}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $relatedProduct->id }}">
+                            <input type="hidden" name="name" value="{{ $relatedProduct->productname }}">
+                            <input type="hidden" name="price" value="{{ $relatedProduct->totalprice }}">
+                            <input type="hidden" name="image" value="{{ Storage::url($relatedProduct->image) }}">
+                            <button type="button" class="btn-cart add-to-cart-button" data-id="{{ $relatedProduct->id }}">
+                                <span>Cart It</span>
+                                <span class="material-icons">shopping_cart</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </div>
+
 
     </div>
 

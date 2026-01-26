@@ -355,7 +355,10 @@ background: #e8e9eb;
 
 @media (max-width: 576px) {
     .product-card {
-        width: 160px;
+        width: auto; /* Let Bootstrap handle width */
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 16px; /* optional smaller gap */
     }
 }
 

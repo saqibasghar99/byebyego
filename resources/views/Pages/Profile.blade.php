@@ -47,134 +47,83 @@
         </div>
 
         <!-- Profile Content -->
-        <div class="profile-content">
-            <!-- Main Content -->
-            <div class="profile-main">
-                <h2 class="section-title">Personal Information</h2>
-                <div class="personal-info-grid">
-                    <div class="info-group">
-                        <span class="info-label">Full Name</span>
-                        <p class="info-value">{{ $user->name }}</p>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Email Address</span>
-                        <p class="info-value">{{ $user->email }}</p>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Member Since</span>
-                        <p class="info-value">{{ $member_since }}</p>
+        <div class="profile-main">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mb-3" id="profileTabs" role="tablist">
+                <li class="nav-item fw-bold" role="presentation">
+                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">Profile</button>
+                </li>
+                <li class="nav-item fw-bold" role="presentation">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab">Settings</button>
+                </li>
+                <li class="nav-item fw-bold" role="presentation">
+                    <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">Security</button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="profileTabsContent">
+                <!-- Profile Tab -->
+                <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                    <div class="personal-info-grid">
+                        <div class="info-group">
+                            <span class="info-label">Full Name</span>
+                            <p class="info-value">{{ $user->name }}</p>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Email</span>
+                            <p class="info-value">{{ $user->email }}</p>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Member Since</span>
+                            <p class="info-value">{{ $member_since }}</p>
+                        </div>
                     </div>
                 </div>
 
-                <h2 class="section-title">Account Settings</h2>
-                <form method="POST" action="{{ route('profile.update') }}" class="settings-form">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="form-group">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" 
-                               value="{{ old('name', $user->name) }}" required>
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" 
-                               value="{{ old('email', $user->email) }}" required>
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-outline border" onclick="resetForm()">Cancel</button>
-                        <button type="submit" class="btn border text-white save-btn">Save Changes</button>
-                    </div>
-                </form>
-
-                <h3 class="section-title" style="margin-top: 40px;">Change Password</h3>
-                <form method="POST" action="{{ route('profile.password') }}" class="settings-form">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="form-group">
-                        <label for="current_password" class="form-label">Current Password</label>
-                        <input type="password" id="current_password" name="current_password" 
-                               class="form-control @error('current_password') is-invalid @enderror" required>
-                        @error('current_password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password" class="form-label">New Password</label>
-                        <input type="password" id="password" name="password" 
-                               class="form-control @error('password') is-invalid @enderror" required>
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password_confirmation" class="form-label">Confirm New Password</label>
-                        <input type="password" id="password_confirmation" name="password_confirmation" 
-                               class="form-control" required>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-outline border" onclick="resetPasswordForm()">Cancel</button>
-                        <button type="submit" class="btn border text-white save-btn">Change Password</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="profile-sidebar">
-                <div class="sidebar-card">
-                    <h3 class="section-title">Your Spendings</h3>
-                    <div class="wallet-balance">
-                        <i class="fas fa-wallet recent-icon" style="font-size: 1.5rem; color: var(--secondary);"></i>
-                        <div class="balance-amount" style="font-size: 1.5rem;" >PKR {{ number_format($stats['total_spent'], 2) }}</div>
-                        <p>Explore more for purchases!</p>
-                    </div>
-                    <div class="wallet-actions">
-                        <a href="{{ route('purchase.history') }}" class="btn border">
-                            <i class="fas fa-plus "></i> Recent Orders
-                        </a>
-                        <a href="/" class="btn border">
-                            <i class="fas fa-shopping-bag"></i> Shop Now
-                        </a>
-                    </div>
+                <!-- Settings Tab -->
+                <div class="tab-pane fade" id="settings" role="tabpanel">
+                    <form method="POST" action="{{ route('profile.update') }}" class="settings-form">
+                        @csrf @method('PUT')
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn save-btn">Save Changes</button>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="sidebar-card">
-                    <h3 class="section-title">Special Offers</h3>
-                    <p>Check back soon for exclusive member offers!</p>
-                    <button class="btn btn-outline border" style="width: 100%; margin-top: 10px;">
-                        <i class="fas fa-gift"></i> View Offers
-                    </button>
+                <!-- Security Tab -->
+                <div class="tab-pane fade" id="security" role="tabpanel">
+                    <form method="POST" action="{{ route('profile.password') }}" class="settings-form">
+                        @csrf @method('PUT')
+                        <div class="form-group">
+                            <label for="current_password" class="form-label">Current Password</label>
+                            <input type="password" id="current_password" name="current_password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">New Password</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn save-btn">Change Password</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    @if(session('success'))
-    <div class="alert-success text-success shadow m-5">
-        {{ session('success') }}
-        <button class="close-alert">&times;</button>
     </div>
-    @endif
 
 <div>
     @include('component.footer')

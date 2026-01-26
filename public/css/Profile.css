@@ -35,7 +35,7 @@ body {
 /* Premium Header */
 .profile-hero {
     height: 380px;
-    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    /* background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); */
     position: relative;
     border-radius: var(--border-radius);
     overflow: hidden;
@@ -49,7 +49,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://www.vocso.com/blog/wp-content/uploads/2022/02/eCommerce-Website-Features-1920-x-1080.jpg') center/cover no-repeat;
+    /* background: url('https://www.vocso.com/blog/wp-content/uploads/2022/02/eCommerce-Website-Features-1920-x-1080.jpg') center/cover no-repeat; */
     opacity: 0.15;
 }
 
@@ -100,12 +100,12 @@ body {
 }
 
 .user-info {
-    color: var(--light);
+    color: #1f1e1eef;
 }
 
 .user-name {
     font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -490,7 +490,7 @@ body {
     .premium-avatar {
         width: 120px;
         height: 120px;
-        font-size: 3.5rem;
+        font-size: 3rem;
     }
 
     .user-name {
@@ -524,6 +524,27 @@ body {
 }
 
 .save-btn{
-    background: linear-gradient(to right,rgb(66, 64, 87),rgb(51, 49, 78),rgb(65, 65, 87));
+    background: #1a1a1a;
     color: white;
 }
+
+
+/* Cards */
+.order-card, .sidebar-card {
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.personal-info-grid {
+    gap: 12px;
+}
+
+.info-group {
+    margin-bottom: 8px;
+}
+
+.form-control {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+

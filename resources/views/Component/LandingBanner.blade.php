@@ -33,12 +33,12 @@
                 {{ $setting->hero_title ?? 'SUMMER COLLECTION' }}
             </div>
 
-            <h2 class="collection-title">
+            <h2 class="collection-title w-75">
                 {{ $setting->hero_subtitle ?? 'Shop the trends you love in ' }}
                 <span id="current-year"></span>
             </h2>
 
-            <p class="collection-subtitle">
+            <p class="collection-subtitle text-dark">
                 Enjoy unbeatable prices on handpicked collections, featuring the latest trends,
                 all delivered right to your doorstep with ease
             </p>

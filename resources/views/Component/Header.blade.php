@@ -110,11 +110,11 @@
         
         <ul class="sidebar-categories">
             @foreach($categories as $category)
-                <li><a href="{{ route('category.products', $category->slug) }}"><i class="fas fa-gem"></i> {{ $category->name }}</a></li>
+                <li><a href="{{ route('category.products', $category->slug) }}"><i class="fas fa-layer-group category-icon"></i> {{ $category->name }}</a></li>
             @endforeach
         </ul>
         
-        <div class="sidebar-footer">
+        <div class="sidebar-footer d-none">
             <a href="#categories">
                 View All Categories
                 <i class="fas fa-arrow-right"></i>

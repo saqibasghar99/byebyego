@@ -123,11 +123,15 @@
                             
                             <!-- Delivery Timeline -->
                             <div class="mt-4 pt-3 border-top">
-                                <h6 class="detail-title">
+                                <h6 class="detail-title"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#timeline-{{ $order->id }}"
+                                    style="cursor:pointer">
                                     <i class="fas fa-truck"></i>
                                     <span>Delivery Status</span>
                                 </h6>
-                                <div class="timeline">
+                                <div class="collapse" id="timeline-{{ $order->id }}">
+                                    <div class="timeline">
                                     @if($order->status == 'pending')
                                     <div class="timeline-item active">
                                         <div class="timeline-dot"></div>
