@@ -168,6 +168,5 @@ hr {
 
 .btn-place-order{
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    background: linear-gradient(to right,rgb(66, 64, 87),rgb(51, 49, 78),rgb(65, 65, 87));
-
+    /* background: linear-gradient(to right,rgb(66, 64, 87),rgb(51, 49, 78),rgb(65, 65, 87)); */
 }

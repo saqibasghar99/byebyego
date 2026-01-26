@@ -15,126 +15,132 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 // use Milon\Barcode\Facades\DNS1D;
+
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
 
 class OrderController extends Controller
 {
 
     public function storeOrders(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'billing_first_name' => 'required|string',
-        'billing_last_name' => 'required|string',
-        'billing_email' => 'required|string|email',
-        'billing_address' => 'required|string',
-        'billing_phone' => 'required|string',
-        'billing_country' => 'required|string',
-        'billing_state' => 'nullable|string',
-        'billing_city' => 'required|string',
-        'billing_zip' => 'nullable|string',
-        'same_as_billing' => 'nullable|string',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput();
-    }
-
-    $orderNumber = 'ORD' . strtoupper(Str::random(6)) . now()->format('YmdHis');
-
-    $order = new Orders();
-    $order->user_id = session()->get('id');
-    $order->billing_first_name = $request->input('billing_first_name');
-    $order->billing_last_name = $request->input('billing_last_name');
-    $order->billing_email = $request->input('billing_email');
-    $order->billing_phone = $request->input('billing_phone');
-    $order->billing_address = $request->input('billing_address');
-    $order->billing_country = $request->input('billing_country');
-    $order->billing_state = $request->input('billing_state');
-    $order->billing_city = $request->input('billing_city');
-    $order->billing_zip = $request->input('billing_zip');
-    $order->order_number = $orderNumber;
-    $order->ordered_at = Carbon::now();
-    $order->payment_status = 'unpaid';
-    $order->status = 'pending';
-    $order->total_amount = $request->input('total_amount', 0);
-    $order->quantity = $request->input('quantity');
-    $order->tax_price = $request->input('tax_price');
-    $order->shipping_cost = $request->input('shipping_cost');
-
-    if ($request->same_as_billing !== 'checked' || !$request->has('same_as_billing')) {
-        $shippingValidator = Validator::make($request->all(), [
-            'shipping_first_name' => 'required|string',
-            'shipping_last_name' => 'required|string',
-            'shipping_email' => 'required|string|email',
-            'shipping_address' => 'required|string',
-            'shipping_phone' => 'required|string',
-            'shipping_country' => 'required|string',
-            'shipping_state' => 'nullable|string',
-            'shipping_city' => 'required|string',
-            'shipping_zip' => 'nullable|string',
+    {
+        $validator = Validator::make($request->all(), [
+            'billing_first_name' => 'required|string',
+            'billing_last_name' => 'required|string',
+            'billing_email' => 'required|string|email',
+            'billing_address' => 'required|string',
+            'billing_phone' => 'required|string',
+            'billing_country' => 'required|string',
+            'billing_state' => 'nullable|string',
+            'billing_city' => 'required|string',
+            'billing_zip' => 'nullable|string',
+            'same_as_billing' => 'nullable|string',
         ]);
 
-        if ($shippingValidator->fails()) {
-            return redirect()->back()->withErrors($shippingValidator)->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $order->shipping_first_name = $request->input('shipping_first_name');
-        $order->shipping_last_name = $request->input('shipping_last_name');
-        $order->shipping_email = $request->input('shipping_email');
-        $order->shipping_phone = $request->input('shipping_phone');
-        $order->shipping_address = $request->input('shipping_address');
-        $order->shipping_country = $request->input('shipping_country');
-        $order->shipping_state = $request->input('shipping_state');
-        $order->shipping_city = $request->input('shipping_city');
-        $order->shipping_zip = $request->input('shipping_zip');
-    } else {
-        $order->shipping_first_name = $order->billing_first_name;
-        $order->shipping_last_name = $order->billing_last_name;
-        $order->shipping_email = $order->billing_email;
-        $order->shipping_phone = $order->billing_phone;
-        $order->shipping_address = $order->billing_address;
-        $order->shipping_country = $order->billing_country;
-        $order->shipping_state = $order->billing_state;
-        $order->shipping_city = $order->billing_city;
-        $order->shipping_zip = $order->billing_zip;
+        $orderNumber = 'ORD' . strtoupper(Str::random(6)) . now()->format('YmdHis');
+
+        $order = new Orders();
+        $order->user_id = session()->get('id');
+        $order->billing_first_name = $request->input('billing_first_name');
+        $order->billing_last_name = $request->input('billing_last_name');
+        $order->billing_email = $request->input('billing_email');
+        $order->billing_phone = $request->input('billing_phone');
+        $order->billing_address = $request->input('billing_address');
+        $order->billing_country = $request->input('billing_country');
+        $order->billing_state = $request->input('billing_state');
+        $order->billing_city = $request->input('billing_city');
+        $order->billing_zip = $request->input('billing_zip');
+        $order->order_number = $orderNumber;
+        $order->ordered_at = Carbon::now();
+        $order->payment_status = 'unpaid';
+        $order->status = 'pending';
+        // $order->total_amount = $request->input('total_amount', 0);
+        $order->quantity = $request->input('quantity');
+
+        // Fetch tax_price and shipping_cost from feefixer table
+        $fee = DB::table('feefixer')->first();
+        $taxPrice = $fee->tax_price ?? 0;
+        $shippingCost = $fee->shipping_cost ?? 0;
+
+        $order->total_amount = $request->input('total_amount', 0) + $taxPrice + $shippingCost;
+
+        if ($request->same_as_billing !== 'checked' || !$request->has('same_as_billing')) {
+            $shippingValidator = Validator::make($request->all(), [
+                'shipping_first_name' => 'required|string',
+                'shipping_last_name' => 'required|string',
+                'shipping_email' => 'required|string|email',
+                'shipping_address' => 'required|string',
+                'shipping_phone' => 'required|string',
+                'shipping_country' => 'required|string',
+                'shipping_state' => 'nullable|string',
+                'shipping_city' => 'required|string',
+                'shipping_zip' => 'nullable|string',
+            ]);
+
+            if ($shippingValidator->fails()) {
+                return redirect()->back()->withErrors($shippingValidator)->withInput();
+            }
+
+            $order->shipping_first_name = $request->input('shipping_first_name');
+            $order->shipping_last_name = $request->input('shipping_last_name');
+            $order->shipping_email = $request->input('shipping_email');
+            $order->shipping_phone = $request->input('shipping_phone');
+            $order->shipping_address = $request->input('shipping_address');
+            $order->shipping_country = $request->input('shipping_country');
+            $order->shipping_state = $request->input('shipping_state');
+            $order->shipping_city = $request->input('shipping_city');
+            $order->shipping_zip = $request->input('shipping_zip');
+        } else {
+            $order->shipping_first_name = $order->billing_first_name;
+            $order->shipping_last_name = $order->billing_last_name;
+            $order->shipping_email = $order->billing_email;
+            $order->shipping_phone = $order->billing_phone;
+            $order->shipping_address = $order->billing_address;
+            $order->shipping_country = $order->billing_country;
+            $order->shipping_state = $order->billing_state;
+            $order->shipping_city = $order->billing_city;
+            $order->shipping_zip = $order->billing_zip;
+        }
+
+        $order->save();
+
+        $cartProducts = CartProduct::where('user_id', session()->get('id'))->get();
+
+        foreach ($cartProducts as $product) {
+
+            $userId = session()->get('id');
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'user_id' => $userId,
+                'product_id' => $product->product_id,
+                'quantity' => $product->quantity,
+                'size' => $product->size ?? '',
+                'total_price' => $product->total_price,
+            ]);
+
+            // Find the product and update its stock
+            $productModel = Product::find($product->product_id);
+
+            // Decrease the product stock quantity
+            if ($productModel && $productModel->stockquantity >= $product->quantity) {
+                $productModel->stockquantity -= $product->quantity;
+                $productModel->save(); // Save the updated stock
+            } else {
+                // Handle cases where stock is insufficient, maybe revert the order
+                return redirect()->back()->with('error', 'Not enough stock for ' . $productModel->productname);
+            }
+
+        }
+
+        // Clear the cart after successful order
+        CartProduct::where('user_id', session()->get('id'))->delete();
+
+        return redirect()->route('purchase.history')->with('success', 'Order placed successfully!');
     }
-
-    $order->save();
-
-    $cartProducts = CartProduct::where('user_id', session()->get('id'))->get();
-
-    foreach ($cartProducts as $product) {
-
-        $userId = session()->get('id');
-
-        OrderItem::create([
-            'order_id' => $order->id,
-            'user_id' => $userId,
-            'product_id' => $product->product_id,
-            'quantity' => $product->quantity,
-            'size' => $product->size ?? '',
-            'total_price' => $product->total_price,
-        ]);
-
-         // Find the product and update its stock
-         $productModel = Product::find($product->product_id);
-
-         // Decrease the product stock quantity
-         if ($productModel && $productModel->stockquantity >= $product->quantity) {
-             $productModel->stockquantity -= $product->quantity;
-             $productModel->save(); // Save the updated stock
-         } else {
-             // Handle cases where stock is insufficient, maybe revert the order
-             return redirect()->back()->with('error', 'Not enough stock for ' . $productModel->productname);
-         }
-
-    }
-
-    // Clear the cart after successful order
-    CartProduct::where('user_id', session()->get('id'))->delete();
-
-    return redirect()->route('purchase.history')->with('success', 'Order placed successfully!');
-}
 
 
     public function SeeCartProducts(Request $request)
@@ -157,7 +163,13 @@ class OrderController extends Controller
         }
 
         $previous_orders = Orders::where('user_id', $userId)->with('items.product')->orderBy('created_at', 'desc')->paginate(3);
-        return view('pages.purchaseHistory', compact('previous_orders'));
+
+        // Get the shipping and tax from feefixer
+        $fee = DB::table('feefixer')->first();
+        $shipping_cost = $fee->shipping_cost ?? 0;
+        $tax_price = $fee->tax_price ?? 0;
+
+        return view('pages.purchaseHistory', compact('previous_orders', 'shipping_cost', 'tax_price'));
     }
 
     public function all_orders(){
@@ -305,7 +317,7 @@ class OrderController extends Controller
     {
         $order = Orders::with(['items.product.specifications'])->findOrFail($orderId);
 
-        $barcode = \DNS1D::getBarcodeHTML($order->order_number, 'C128', 1.0, 40);
+        $barcode = DNS1D::getBarcodeHTML($order->order_number, 'C128', 1.0, 40);
         $shippingAddress = $order->shipping_address ?? $order->billing_address;
 
         return view('Component.ShippingLabel', compact('order', 'barcode', 'shippingAddress'));

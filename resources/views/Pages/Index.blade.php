@@ -65,7 +65,7 @@
                                             </span>
                                         </sup>
                                     @else
-                                        <span class="current-price ">
+                                        <span class="current-price">
                                             Rs. {{ number_format($product->totalprice, 2) }}
                                         </span>
                                     @endif
@@ -79,11 +79,12 @@
                                     <input type="hidden" name="price" value="{{ $product->totalprice }}">
                                     <input type="hidden" name="image" value="{{ Storage::url($product->image) }}">
                                     <div class="cart-buttons d-flex justify-content-between gap-md-2 gap-1">
-                                        <a href="{{ route('product.detail', $product->id) }}" class="border text-center text-decoration-none btn-view">
+                                        <!-- <a href="{{ route('product.detail', $product->id) }}" class="border text-center text-decoration-none btn-view">
                                             <i class="fas fa-eye"></i> View
-                                        </a>
-                                        <button type="button" class="btn add-to-cart-button shadow-none btn-outline-light" data-id="{{ $product->id }}">
-                                            <span class="material-icons text-white m-auto">shopping_cart</span>
+                                        </a> -->
+                                        <button type="button" class="btn add-to-cart-button w-100 shadow-none btn-outline-light d-flex align-items-center justify-content-center gap-2" data-id="{{ $product->id }}">
+                                            <span class="text-white">Cart It</span>
+                                            <span class="material-icons text-white">shopping_cart</span>
                                         </button>
                                     </div>
                                 </form>

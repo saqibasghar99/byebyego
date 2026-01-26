@@ -167,11 +167,8 @@
     font-weight: 700;
     margin-bottom: 0.5rem;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--danger-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text; /* fallback for some modern browsers */
-    color: transparent;
+    /* background: linear-gradient(135deg, var(--secondary-color) 0%, var(--danger-color) 100%); */
+    color: #333333;
     text-decoration: none;
     transition: color 0.3s;
     display: -webkit-box;
@@ -181,7 +178,7 @@
 }
 
 .product-title:hover {
-    color: var(--primary);
+    color: #333333;
 }
 
 .product-rating {
@@ -210,7 +207,7 @@
 .current-price {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #212529;
+    color: #cc6504;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     margin-right: 10px;
 }
@@ -231,7 +228,7 @@
 
 /* Add to Cart Button */
 .add-to-cart-button {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--danger-color) 100%);
+    background: linear-gradient(135deg, #333333 0%, #333333 100%);
     border: none;
     border-radius: 8px;
     padding: 12px 15px;
@@ -247,10 +244,6 @@
     height: 40px;
 }
 
-.add-to-cart-button:hover {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--danger-color) 100%);
-    transform: translateY(-2px);
-}
 
 .add-to-cart-button .material-icons {
     font-size: 1.2rem;
@@ -328,7 +321,7 @@ background: #e8e9eb;
     .current-price {
         font-size: 1rem;
         font-weight: 600;
-        color: var(--accent);
+        color: #cc6504;
     }
     .cart-buttons{
         gap: 5px;
@@ -348,7 +341,7 @@ background: #e8e9eb;
     .current-price {
         font-size: 1rem;
         font-weight: 600;
-        color: var(--accent);
+        color: #cc6504;
     }
 }
 
@@ -369,10 +362,17 @@ background: #e8e9eb;
     }
 }
 
+
 @media (max-width: 576px) {
+    .product-card {
+        width: 160px;
+    }
+}
+
+/* @media (max-width: 576px) {
     .product-card {
         max-width: 320px;
         margin-left: auto;
         margin-right: auto;
     }
-}
+} */

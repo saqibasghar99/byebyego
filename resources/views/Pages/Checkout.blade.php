@@ -209,7 +209,7 @@
 
                 <hr class="mb-4" hidden>
 
-                <button class="btn btn-place-order btn-block w-100 btn-order text-white" type="submit" style="padding: 10px 25px;">Place Order</button>
+            <button class="btn btn-dark btn-place-order btn-block w-100 btn-order text-white" type="submit" style="padding: 10px 25px;">Place Order</button>
             </form>
         </div>
     </div>

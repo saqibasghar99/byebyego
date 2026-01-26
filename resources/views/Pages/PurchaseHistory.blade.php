@@ -19,7 +19,7 @@
 </div>
 
 <!-- Page Header -->
-<header class="page-header">
+<header class="page-header" style="background-color: #333333">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-8">
@@ -97,12 +97,12 @@
                             
                             <div class="summary-item">
                                 <span>Shipping</span>
-                                <span>{{ number_format($order->shipping_cost, 2) }} PKR </span>
+                                <span>{{ number_format($shipping_cost, 2) }} PKR </span>
                             </div>
                             
                             <div class="summary-item">
                                 <span>Tax</span>
-                                <span>{{ number_format($order->tax_price, 2) }} PKR </span>
+                                <span>{{ number_format($tax_price, 2) }} PKR </span>
                             </div>
                             
                             <div class="summary-item summary-total">

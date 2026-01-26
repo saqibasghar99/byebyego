@@ -123,7 +123,7 @@
                 </table>
             </div>
             <button onclick="checkStock(event)" id="checkout-btn" class="btn btn-sm checkout-btn rounded-0 text-white border-0 shadow-none w-100 mt-4 py-2 btn-dark">
-                CHECKOUT
+                Checkout
             </button>
         </div>
     </div>
