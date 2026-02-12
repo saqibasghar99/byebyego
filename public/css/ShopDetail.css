@@ -633,7 +633,7 @@ body {
 
 .specs-section {
     border-radius: 16px;
-    padding: 2rem;
+    /* padding: 2rem; */
 }
 
 .specs-title {
@@ -718,11 +718,7 @@ body {
 }
 
 .product-title {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--danger-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text; /* fallback for some modern browsers */
-    color: transparent;
+    color: rgba(26, 25, 25, 0.842);
     font-size: 1.5rem;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: 700;
@@ -757,3 +753,17 @@ body {
     margin: 0;
     padding: 0;
 }
+
+
+/* Center the toggle button */
+.specs-section .btn {
+    border-radius: 25px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+}
+
+/* Smooth collapse animation */
+.collapse {
+    transition: height 0.4s ease;
+}
+

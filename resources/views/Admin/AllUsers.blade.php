@@ -209,6 +209,7 @@
                                     <td>{{ $users->created_at }}</td>
                                     <td>{{ $users->updated_at }}</td>
                                     <td>
+                                      <a href="{{ route('user.edit', $users->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
                                       <form action="{{ route('user.delete', $users->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-outline-primary" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>

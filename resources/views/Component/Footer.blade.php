@@ -21,33 +21,47 @@
             <!-- Brand Info -->
             <div class="col-md-3 mb-4">
                 <h4 class="fw-bold" style="font-family: 'Poppins', sans-serif;">
-                    ✂️ <span style="color: #fff;">ShopifyX</span>
+                    <span style="color: #fff;">ShopEase</span>
                 </h4>
                 <p class=" small">
-                    Subscribe Easy Tutorials Youtube channel to watch more videos on website development and press the bell icon to get immediate notification of latest videos.
+                    Welcome to our store, where quality meets affordability. We offer fast shipping, secure payments, and a seamless shopping experience. Shop with confidence and find everything you need in one place
                 </p>
             </div>
 
             <!-- Office Info -->
             <div class="col-md-3 mb-4">
                 <h6 class="text-uppercase fw-bold mb-3">Office</h6>
-                <p class=" small mb-1">ITPL Road<br>Whitefield, Bangalore<br>Karnataka, PIN 560066<br>India</p>
+                <p class=" small mb-1">Multan Road<br>Thokar Niaz Baig<br>Lahore, Punjab<br>Pakistan</p>
                 <p class=" small mb-1">
                     <a href="mailto:avinashdm@outlook.com" class="text-decoration-none text-light">avinashdm@outlook.com</a>
                 </p>
-                <p class=" small mb-0 fw-bold">+91 – 0123456789</p>
+                <p class="small mb-0 fw-bold">
+                    <a href="https://wa.me/923471428593" target="_blank" class="text-decoration text-white">
+                        +92 347 1428593
+                    </a>
+                </p>
             </div>
 
             <!-- Links -->
             <div class="col-md-2 mb-4">
                 <h6 class="text-uppercase fw-bold mb-3">Shop</h6>
-                <ul class="list-unstyled  small">
-                    <li><a href="#categories" class="text-decoration-none text-light">By Category</a></li>
-                    <li><a href="{{ route('category.products', 'electronics') }}" class="text-decoration-none text-light">Electronics</a></li>
-                    <li><a href="{{ route('category.products', 'gifts') }}" class="text-decoration-none text-light">Gifts</a></li>
-                    <li><a href="{{ route('category.products', 'beauty') }}" class="text-decoration-none text-light">Beauty</a></li>
-                    <li><a href="{{ route('category.products', 'watches') }}" class="text-decoration-none text-light">Watches</a></li>
+                @php
+                    // Filter out "Featured" and shuffle
+                    $filteredCategories = $categories->filter(function($c){
+                        return strtolower(trim($c->name)) !== 'featured';
+                    })->shuffle()->take(6); // take only 5 randomly
+                @endphp
+
+                <ul class="list-unstyled small">
+                    @foreach($filteredCategories as $category)
+                        <li>
+                            <a href="{{ route('category.products', $category->slug) }}" class="text-decoration-none text-light">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
+
             </div>
 
             <!-- Newsletter -->

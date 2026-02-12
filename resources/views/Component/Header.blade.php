@@ -23,9 +23,7 @@
                 </a> -->
 
                 <a class="navbar-brand" href="/" style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.4rem; text-decoration: none;">
-                    <span style="color: #1E73BE;">Bye</span>
-                    <span style="color: #FF7A00;">Bye</span>
-                    <span style="color: #333333;">Go</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="ShopEase" class="logo-img">
                 </a>
 
                 <!-- Category Toggle Button -->
@@ -88,9 +86,11 @@
             <div class="container">
                 <div class="nav">
                     @foreach($categories as $category)
-                        <a class="nav-link text-white" href="{{ route('category.products', $category->slug) }}">
-                            {{ $category->name }}
-                        </a>
+                        @if(strtolower(trim($category->name)) !== 'featured')
+                            <a class="nav-link text-white" href="{{ route('category.products', $category->slug) }}">
+                                {{ $category->name }}
+                            </a>
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -110,7 +110,9 @@
         
         <ul class="sidebar-categories">
             @foreach($categories as $category)
-                <li><a href="{{ route('category.products', $category->slug) }}"><i class="fas fa-layer-group category-icon"></i> {{ $category->name }}</a></li>
+                @if($category->name !== 'Featured')
+                    <li><a href="{{ route('category.products', $category->slug) }}"><i class="fas fa-layer-group category-icon"></i> {{ $category->name }}</a></li>
+                @endif
             @endforeach
         </ul>
         

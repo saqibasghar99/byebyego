@@ -256,13 +256,17 @@
                                             </select>
                                             <select class="px-1 mx-1 rounded-0" name="payment_status" class="form-control" id="" required>
                                                 <option value="">Payment Status</option>
-                                                <option value="paid" {{ $orders->status == 'paid' ? 'selected' : '' }}>Paid</option>
-                                                <option value="unpaid" {{ $orders->status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
-                                                <option value="refunded" {{ $orders->status == 'refunded' ? 'selected' : '' }}>Refunded</option>
+                                                <option value="paid" {{ $orders->payment_status == 'paid' ? 'selected' : '' }}>Paid</option>
+                                                <option value="unpaid" {{ $orders->payment_status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
+                                                <option value="refunded" {{ $orders->payment_status == 'refunded' ? 'selected' : '' }}>Refunded</option>
                                             </select>
                                             <button type="submit" class="btn btn-dark rounded-0 btn-sm my-auto mx-1 p-2">Update</button>
                                             <a href="{{ route('shipping.label.view', $orders->id) }}" target="blank" class="btn btn-sm btn-success" title="Shipping Label"><i class="fas fa-tag"></i> Label</a>
                                         </form>
+                                        <a href="{{ route('orders.edit', $orders->id) }}" 
+                                          class="btn btn-sm btn-outline-success">
+                                            Edit
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach

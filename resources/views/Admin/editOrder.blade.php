@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JuttBrand admin</title>
   <link rel="shortcut icon" type="image/png" href="./admin/assets/images/logos/seodashlogo.png" />
-  <link rel="stylesheet" href="./css/styles.min.css" />
-  <link rel="stylesheet" href="./css/Productlisting.css" />
+  <link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
 </head>
 <body>
   <!--  Body Wrapper -->
@@ -175,59 +174,134 @@
       </header>
       <!--  Header End -->
 
-      <div class="container-fluid">
-      @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-      <div class="row">
-        <div class="col-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-black">All Categories</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="background-color: #232323" class="text-white ">Category Id</th>
-                                    <th style="background-color: #232323" class="text-white ">Name</th>
-                                    <th style="background-color: #232323" class="text-white ">Created_At</th>
-                                    <th style="background-color: #232323" class="text-white ">Updated_At</th>
-                                    <th style="background-color: #232323" class="text-white ">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($all_categories as $categories)
-                                <tr>
-                                    <td>{{ $categories->id }}</td>
-                                    <td>{{ $categories->name }}</td>
-                                    <td>{{ $categories->created_at }}</td>
-                                    <td>{{ $categories->updated_at }}</td>
-                                    <td>
-                                      <a href="{{ route('category.edit', $categories->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
-                                      <form action="{{ route('category.destroy', $categories->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-primary" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
-                                      </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
+    
 
-      </div>
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header">
+            <h4>Edit Order #{{ $order->order_number }}</h4>
+        </div>
+
+        <div class="card-body">
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form action="{{ route('orders.update', $order->id) }}" method="POST">
+                @csrf
+
+                <div class="row">
+
+                    <!-- Billing Info -->
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Billing Details</h5>
+
+                        <div class="mb-3">
+                            <label>First Name</label>
+                            <input type="text" name="billing_first_name"
+                                   class="form-control"
+                                   value="{{ $order->billing_first_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Last Name</label>
+                            <input type="text" name="billing_last_name"
+                                   class="form-control"
+                                   value="{{ $order->billing_last_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" name="billing_email"
+                                   class="form-control"
+                                   value="{{ $order->billing_email }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Phone</label>
+                            <input type="text" name="billing_phone"
+                                   class="form-control"
+                                   value="{{ $order->billing_phone }}">
+                        </div>
+                    </div>
+
+                    <!-- Address & Status -->
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Address & Status</h5>
+
+                        <div class="mb-3">
+                            <label>Address</label>
+                            <textarea name="billing_address"
+                                      class="form-control"
+                                      rows="3">{{ $order->billing_address }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>City</label>
+                            <input type="text" name="billing_city"
+                                   class="form-control"
+                                   value="{{ $order->billing_city }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Order Status</label>
+                            <select name="status" class="form-control">
+                                <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
+                                <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Payment Status</label>
+                            <select name="payment_status" class="form-control">
+                                <option value="paid" {{ $order->payment_status == 'paid' ? 'selected' : '' }}>Paid</option>
+                                <option value="unpaid" {{ $order->payment_status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
+                                <option value="refunded" {{ $order->payment_status == 'refunded' ? 'selected' : '' }}>Refunded</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Total Amount</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="Rs. {{ number_format($order->total_amount, 2) }}"
+                                   disabled>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-dark">
+                        Update Order
+                    </button>
+
+                    <a href="{{ route('update.order.status') }}"
+                       class="btn btn-secondary">
+                        Back
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
     </div>
   </div>
   <script src="./admin/assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="./admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="./admin/assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="./admin/assets/js/sidebarmenu.js"></script>
+  <script src="./admin/assets/js/app.min.js"></script>
   <script src="./admin/assets/js/dashboard.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>

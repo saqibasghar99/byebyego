@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JuttBrand admin</title>
   <link rel="shortcut icon" type="image/png" href="./admin/assets/images/logos/seodashlogo.png" />
-  <link rel="stylesheet" href="./css/styles.min.css" />
-  <link rel="stylesheet" href="./css/Productlisting.css" />
+  <link rel="stylesheet" href="{{ asset('./css/styles.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/Productlisting.css') }}" />
 </head>
 <body>
   <!--  Body Wrapper -->

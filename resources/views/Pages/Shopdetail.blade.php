@@ -109,7 +109,7 @@
                                 <input type="hidden" name="image" value="{{ Storage::url($products->image) }}">
                                 <input type="hidden" name="quantity" id="buyNowQuantity" value="1">
                                 <input type="hidden" name="size" id="buyNowSize" value="">
-                                <button type="button" id="buy-now-btn" class="buy-cart-btn rounded-0 btn btn-block text-white bg-dark buy-now-button" data-id="{{ $products->id }}">
+                                <button type="button" id="buy-now-btn" class="buy-cart-btn rounded-2 btn btn-block text-white bg-dark buy-now-button" data-id="{{ $products->id }}">
                                     </i>Buy Now
                                 </button>
                             </form>
@@ -134,128 +134,125 @@
             </div>
         </div>
 
-        @if ($products->specifications)
-<div class="specs-section my-5">
-    <h4 class="specs-title text-center mb-4 position-relative">
-        <span class="px-3 bg-white position-relative">Specifications</span>
-        <span class="title-border"></span>
-    </h4>
-    
-    <div class="specs-container">
-        <div class="specs-grid">
-            <!-- Column 1 -->
-            <div class="specs-group">
-                @if($products->specifications->brand)
-                <div class="spec-item">
-                    <div class="spec-label">Brand</div>
-                    <div class="spec-value">{{ $products->specifications->brand }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->model)
-                <div class="spec-item">
-                    <div class="spec-label">Model</div>
-                    <div class="spec-value">{{ $products->specifications->model }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->display)
-                <div class="spec-item">
-                    <div class="spec-label">Display</div>
-                    <div class="spec-value">{{ $products->specifications->display }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->processor)
-                <div class="spec-item">
-                    <div class="spec-label">Processor</div>
-                    <div class="spec-value">{{ $products->specifications->processor }}</div>
-                </div>
-                @endif
+    @if ($products->specifications)
+        <div class="specs-section">
+            <h4 class="specs-title text-center position-relative">
+                <!-- <span class="px-3 bg-white position-relative">Specifications</span> -->
+                <!-- <span class="title-border"></span> -->
+            </h4>   
+
+            <!-- Toggle Button -->
+            <div class="text-center">
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#specsCollapse" aria-expanded="false" aria-controls="specsCollapse">
+                    View Product Specifications
+                </button>
             </div>
-            
-            <!-- Column 2 -->
-            <div class="specs-group">
-                @if($products->specifications->ram)
-                <div class="spec-item">
-                    <div class="spec-label">RAM</div>
-                    <div class="spec-value">{{ $products->specifications->ram }}</div>
+
+            <!-- Collapsible Specs -->
+            <div class="collapse" id="specsCollapse">
+                <div class="specs-container">
+                    <div class="specs-grid">
+                        <div class="specs-group">
+                            @if($products->specifications->brand)
+                            <div class="spec-item">
+                                <div class="spec-label">Brand</div>
+                                <div class="spec-value">{{ $products->specifications->brand }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->model)
+                            <div class="spec-item">
+                                <div class="spec-label">Model</div>
+                                <div class="spec-value">{{ $products->specifications->model }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->display)
+                            <div class="spec-item">
+                                <div class="spec-label">Display</div>
+                                <div class="spec-value">{{ $products->specifications->display }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->processor)
+                            <div class="spec-item">
+                                <div class="spec-label">Processor</div>
+                                <div class="spec-value">{{ $products->specifications->processor }}</div>
+                            </div>
+                            @endif
+                        </div>
+
+                        <div class="specs-group">
+                            @if($products->specifications->ram)
+                            <div class="spec-item">
+                                <div class="spec-label">RAM</div>
+                                <div class="spec-value">{{ $products->specifications->ram }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->storage)
+                            <div class="spec-item">
+                                <div class="spec-label">Storage</div>
+                                <div class="spec-value">{{ $products->specifications->storage }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->battery)
+                            <div class="spec-item">
+                                <div class="spec-label">Battery</div>
+                                <div class="spec-value">{{ $products->specifications->battery }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->os)
+                            <div class="spec-item">
+                                <div class="spec-label">OS</div>
+                                <div class="spec-value">{{ $products->specifications->os }}</div>
+                            </div>
+                            @endif
+                        </div>
+
+                        <div class="specs-group">
+                            @if($products->specifications->camera)
+                            <div class="spec-item">
+                                <div class="spec-label">Camera</div>
+                                <div class="spec-value">{{ $products->specifications->camera }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->connectivity)
+                            <div class="spec-item">
+                                <div class="spec-label">Connectivity</div>
+                                <div class="spec-value">{{ $products->specifications->connectivity }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->dimensions)
+                            <div class="spec-item">
+                                <div class="spec-label">Dimensions</div>
+                                <div class="spec-value">{{ $products->specifications->dimensions }}</div>
+                            </div>
+                            @endif
+                            @if($products->specifications->weight)
+                            <div class="spec-item">
+                                <div class="spec-label">Weight</div>
+                                <div class="spec-value">{{ $products->specifications->weight }}</div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="full-width-specs mt-3">
+                        @if($products->specifications->warranty)
+                        <div class="spec-item">
+                            <div class="spec-label">Warranty</div>
+                            <div class="spec-value">{{ $products->specifications->warranty }}</div>
+                        </div>
+                        @endif
+                        @if($products->specifications->included_items)
+                        <div class="spec-item">
+                            <div class="spec-label">Included Items</div>
+                            <div class="spec-value">{{ $products->specifications->included_items }}</div>
+                        </div>
+                        @endif
+                    </div>
                 </div>
-                @endif
-                
-                @if($products->specifications->storage)
-                <div class="spec-item">
-                    <div class="spec-label">Storage</div>
-                    <div class="spec-value">{{ $products->specifications->storage }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->battery)
-                <div class="spec-item">
-                    <div class="spec-label">Battery</div>
-                    <div class="spec-value">{{ $products->specifications->battery }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->os)
-                <div class="spec-item">
-                    <div class="spec-label">OS</div>
-                    <div class="spec-value">{{ $products->specifications->os }}</div>
-                </div>
-                @endif
-            </div>
-            
-            <!-- Column 3 -->
-            <div class="specs-group">
-                @if($products->specifications->camera)
-                <div class="spec-item">
-                    <div class="spec-label">Camera</div>
-                    <div class="spec-value">{{ $products->specifications->camera }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->connectivity)
-                <div class="spec-item">
-                    <div class="spec-label">Connectivity</div>
-                    <div class="spec-value">{{ $products->specifications->connectivity }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->dimensions)
-                <div class="spec-item">
-                    <div class="spec-label">Dimensions</div>
-                    <div class="spec-value">{{ $products->specifications->dimensions }}</div>
-                </div>
-                @endif
-                
-                @if($products->specifications->weight)
-                <div class="spec-item">
-                    <div class="spec-label">Weight</div>
-                    <div class="spec-value">{{ $products->specifications->weight }}</div>
-                </div>
-                @endif
             </div>
         </div>
-        
-        <!-- Full width items -->
-        <div class="full-width-specs">
-            @if($products->specifications->warranty)
-            <div class="spec-item">
-                <div class="spec-label">Warranty</div>
-                <div class="spec-value">{{ $products->specifications->warranty }}</div>
-            </div>
-            @endif
-            
-            @if($products->specifications->included_items)
-            <div class="spec-item">
-                <div class="spec-label">Included Items</div>
-                <div class="spec-value">{{ $products->specifications->included_items }}</div>
-            </div>
-            @endif
-        </div>
-    </div>
-</div>
-@endif
+    @endif
+
 
         <!-- Explore More Products Section -->
 <!-- <div class="explore-more-section">

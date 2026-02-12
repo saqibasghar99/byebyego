@@ -8,8 +8,6 @@
     --warning-color: #f8961e;
     --danger-color: #ef233c;
     --gradient: linear-gradient(to right,rgb(66, 64, 87),rgb(51, 49, 78),rgb(65, 65, 87));
-    --card-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
-    --hover-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -20,7 +18,7 @@
     padding: 3rem 0;
     margin-bottom: 3rem;
     border-radius: 0 0 20px 20px;
-    box-shadow: 0 10px 30px -10px rgba(59, 71, 122, 0.3);
+    /* box-shadow: 0 10px 30px -10px rgba(59, 71, 122, 0.3); */
 }
 
 

@@ -147,7 +147,7 @@
         position: relative;
         overflow: hidden;
         border-radius: 10px;
-        height: 200px;
+        height: 110px;
         text-decoration: none;
     }
 
@@ -232,7 +232,8 @@
         }
 
         .category-card {
-            height: 150px;
+            height: 120px;
+            width: 200px;
         }
     }
 
@@ -395,3 +396,22 @@
         background-color: var(--btn-bg-color);
         padding: 5px 15px;
     }
+
+
+
+
+
+
+    /* -------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+    
+    

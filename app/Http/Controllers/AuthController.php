@@ -76,6 +76,35 @@ class AuthController extends Controller
         return view('admin.allUsers', compact('all_users'));
     }
 
+
+    // Show Edit Form
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.editUser', compact('user'));
+    }
+
+    // Update User
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'role'  => 'required'
+        ]);
+
+        $user->name  = $request->name;
+        $user->email = $request->email;
+        $user->role  = $request->role;
+
+        $user->save();
+
+        return redirect()->route('users.all')
+            ->with('success', 'User updated successfully.');
+    }
+
     
     public function delete_user(Request $request, $id)
     {

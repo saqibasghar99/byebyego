@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JuttBrand admin</title>
   <link rel="shortcut icon" type="image/png" href="./admin/assets/images/logos/seodashlogo.png" />
-  <link rel="stylesheet" href="./css/styles.min.css" />
-  <link rel="stylesheet" href="./css/Productlisting.css" />
+  <link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/Productlisting.css') }}" />
 </head>
 <body>
   <!--  Body Wrapper -->
@@ -107,14 +107,6 @@
                 <span class="hide-menu">Top Picks</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link rounded-1 p-2" href="/landing-banner" aria-expanded="false">
-                <span>
-                  <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
-                </span>
-                <span class="hide-menu">Website Settings</span>
-              </a>
-            </li>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->
@@ -175,52 +167,38 @@
       </header>
       <!--  Header End -->
 
-      <div class="container-fluid">
-      @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-      <div class="row">
-        <div class="col-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-black">All Categories</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="background-color: #232323" class="text-white ">Category Id</th>
-                                    <th style="background-color: #232323" class="text-white ">Name</th>
-                                    <th style="background-color: #232323" class="text-white ">Created_At</th>
-                                    <th style="background-color: #232323" class="text-white ">Updated_At</th>
-                                    <th style="background-color: #232323" class="text-white ">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($all_categories as $categories)
-                                <tr>
-                                    <td>{{ $categories->id }}</td>
-                                    <td>{{ $categories->name }}</td>
-                                    <td>{{ $categories->created_at }}</td>
-                                    <td>{{ $categories->updated_at }}</td>
-                                    <td>
-                                      <a href="{{ route('category.edit', $categories->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
-                                      <form action="{{ route('category.destroy', $categories->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-primary" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
-                                      </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="container-fluid">
+        <h2>Edit Category</h2>
+        <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group mb-3">
+                <label for="name">Category Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ $category->name }}" required>
             </div>
-        </div>
-      </div>
+
+            <div class="form-group mb-3">
+                <label for="image">Category Image (optional)</label>
+                @if($category->image)
+                    <div class="mb-2">
+                        <img src="{{ asset($category->image) }}" alt="Category Image" width="100">
+                    </div>
+                @endif
+                <input type="file" id="image" name="image" class="form-control" accept="image/*">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="status">Status</label>
+                <select id="status" name="status" class="form-control">
+                    <option value="1" {{ $category->status == 1 ? 'selected' : '' }}>Active</option>
+                    <option value="0" {{ $category->status == 0 ? 'selected' : '' }}>Inactive</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Update Category</button>
+        </form>
+    </div>
+
+
 
       </div>
     </div>

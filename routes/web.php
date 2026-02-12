@@ -235,6 +235,12 @@ Route::post('/update-product/{id}', [ProductController::class, 'updateProduct'])
 Route::delete('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->middleware('admin')->name('products.destroy');
 
 Route::get('/all_categories', [ProductController::class, 'ShowAllCategoriestoAdmin'])->middleware('admin')->name('showall_category.admin');
+// Show edit form
+Route::get('/category/edit/{id}', [ProductController::class, 'edit'])->name('category.edit');
+
+// Handle update
+Route::post('/category/update/{id}', [ProductController::class, 'update'])->name('category.update');
+
 Route::get('/most_order_items', [ProductController::class, 'ShowMostOrderItemstoAdmin'])->middleware('admin')->name('showall_mostOrderItems.admin');
 
 Route::get('/live-search', [ProductController::class, 'liveSearch'])->name('products.liveSearch');
@@ -261,6 +267,15 @@ Route::get('/purchase-history', [OrderController::class, 'Purchase_history'])->n
 
 Route::get('/all_orders', [OrderController::class, 'all_orders'])->middleware('admin')->name('update.order.status');
 Route::post('/all_orders/{id}/update-status', [OrderController::class, 'update_order_status'])->middleware('admin')->name('orders.updateStatus');
+
+Route::get('/orders/edit/{id}', [OrderController::class, 'OrderEdit'])
+    ->middleware('admin')
+    ->name('orders.edit');
+
+Route::post('/orders/update/{id}', [OrderController::class, 'OrderEditUpdate'])
+    ->middleware('admin')
+    ->name('orders.update');
+
 
 Route::get('/shipping-label/view/{orderId}', [OrderController::class, 'showShippingLabel'])->middleware('admin')->name('shipping.label.view');
 Route::get('/order/details/{order_number}', [OrderController::class, 'showOrderByNumber']);
@@ -296,6 +311,16 @@ Route::middleware('admin')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/all_users', [AuthController::class, 'getallUsers'])->middleware('admin')->name('users.all');
+// Show edit form
+Route::get('/user/edit/{id}', [AuthController::class, 'editUser'])
+    ->middleware('admin')
+    ->name('user.edit');
+
+// Update user
+Route::post('/user/update/{id}', [AuthController::class, 'updateUser'])
+    ->middleware('admin')
+    ->name('user.update');
+
 Route::post('/user/{id}/delete_user', [AuthController::class, 'delete_user'])->middleware('admin')->name('user.delete');
 
 /*
@@ -360,3 +385,19 @@ Route::get('/optimize-server', function () {
 
     return "Server optimization completed successfully!";
 });
+
+
+Route::get('/create-admin', function () {
+
+    DB::table('users')->insert([
+        'name' => 'Muhammad Saqib',
+        'email' => 'saqibasghar.official@gmail.com',
+        'password' => Hash::make('password'),
+        'role' => 'admin',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    return "Admin Created Successfully!";
+});
+

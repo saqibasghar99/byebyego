@@ -329,7 +329,31 @@ class OrderController extends Controller
         return view('Pages.PurchaseHistory', compact('order'));
     }
 
+
+    public function OrderEdit($id)
+    {
+        $order = Orders::findOrFail($id);
+        return view('Admin.editOrder', compact('order'));
+    }
+
+    public function OrderEditUpdate(Request $request, $id)
+    {
+        $order = Orders::findOrFail($id);
+
+        $request->validate([
+            'billing_first_name' => 'required',
+            'billing_email' => 'required|email',
+            'billing_phone' => 'required'
+        ]);
+
+        $order->update($request->all());
+
+        return redirect()->route('update.order.status')
+            ->with('success', 'Order details updated successfully.');
+    }
+
 }
+
 
 
 

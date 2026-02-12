@@ -216,6 +216,11 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Hero Subtitle line</label>
+                            <textarea name="hero_subtitle_line" class="form-control">{{ old('hero_subtitle_line', $setting?->hero_subtitle_line) }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Button Text</label>
                             <input type="text" name="hero_button_text" value="{{ old('hero_button_text', $setting?->hero_button_text) }}" class="form-control">
                         </div>
@@ -246,7 +251,7 @@
                           <input type="text" name="hero_title_color"
                                 class="form-control"
                                 placeholder="#ffffff"
-                                value="{{ session('hero_title_color', '#ffffff') }}">
+                                value="{{ old('hero_title_color', $setting?->hero_title_color ?? '#ffffff') }}">
                       </div>
 
                       <div class="mb-3">
@@ -254,7 +259,15 @@
                           <input type="text" name="hero_subtitle_color"
                                 class="form-control"
                                 placeholder="#f1f1f1"
-                                value="{{ session('hero_subtitle_color', '#f1f1f1') }}">
+                                value="{{ old('hero_subtitle_color', $setting?->hero_subtitle_color ?? '#f1f1f1') }}">
+                      </div>
+
+                      <div class="mb-3">
+                          <label class="form-label">Hero Subtitle Line Color</label>
+                          <input type="text" name="hero_subtitle_line_color"
+                                class="form-control"
+                                placeholder="#f1f1f1"
+                                value="{{ old('hero_subtitle_line_color', $setting?->hero_subtitle_line_color ?? '#f1f1f1') }}">
                       </div>
 
                       <div class="mb-3">
@@ -262,7 +275,7 @@
                           <input type="text" name="hero_button_text_color"
                                 class="form-control"
                                 placeholder="#ffffff"
-                                value="{{ session('hero_button_text_color', '#ffffff') }}">
+                                value="{{ old('hero_button_text_color', $setting?->hero_button_text_color ?? '#ffffff') }}">
                       </div>
 
                       <div class="mb-3">
@@ -270,7 +283,7 @@
                           <input type="text" name="hero_button_bg_color"
                                 class="form-control"
                                 placeholder="#000000"
-                                value="{{ session('hero_button_bg_color', '#000000') }}">
+                                value="{{ old('hero_button_bg_color', $setting?->hero_button_bg_color ?? '#000000') }}">
                       </div>
 
 

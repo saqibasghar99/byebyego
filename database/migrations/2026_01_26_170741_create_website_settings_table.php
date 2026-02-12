@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('landing_banner_image')->nullable();
             $table->string('hero_title')->nullable();
             $table->string('hero_subtitle')->nullable();
+            $table->text('hero_subtitle_line')->nullable();
             $table->string('hero_button_text')->nullable();
             $table->string('hero_button_link')->nullable();
             $table->boolean('show_hero_text')->nullable()->default(true);
@@ -32,6 +33,14 @@ return new class extends Migration
             $table->string('instagram_url')->nullable();
             $table->string('linkedin_url')->nullable();
             $table->text('footer_text')->nullable();
+
+            $table->string('hero_title_color')->nullable();        // e.g. #ffffff
+            $table->string('hero_subtitle_color')->nullable();     // e.g. #cccccc
+            $table->string('hero_subtitle_line_color')->nullable();     // e.g. #cccccc
+            $table->string('hero_button_text_color')->nullable();  // e.g. #ffffff
+            $table->string('hero_button_bg_color')->nullable();    // e.g. #ff6600
+            $table->string('footer_text_color')->nullable();       // e.g. #999999
+
 
             $table->timestamps();
         });

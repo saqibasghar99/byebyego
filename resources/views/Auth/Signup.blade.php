@@ -14,7 +14,7 @@
     <div class="auth-container">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-5">
                     <div class="auth-card">
                         <div class="auth-header">
                             <div class="decorative-circle circle-1"></div>

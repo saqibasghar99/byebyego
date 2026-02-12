@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\Feefixer;
 use App\Models\WebsiteSetting;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
@@ -253,19 +254,53 @@ class ProductController extends Controller
     }
 
 
+    // public function ShowProducts()
+    // {
+    //     $setting = WebsiteSetting::first();
+    //     $featuredProducts = Product::where('category', 'Featured')
+    //         ->where('status', 'active')
+    //         ->get();
+        
+    //     $categories = Categories::where('status', 1)->get();
+        
+    //     return view('Pages.Index', [
+    //         'products' => $featuredProducts,
+    //         'categories' => $categories,
+    //         'setting' => $setting
+    //     ]);
+    // }
+
+
+
     public function ShowProducts()
     {
         $setting = WebsiteSetting::first();
+
+        // Featured products
         $featuredProducts = Product::where('category', 'Featured')
             ->where('status', 'active')
             ->get();
-        
+
+        // Categories
         $categories = Categories::where('status', 1)->get();
-        
+
+        // Most buying product (top-selling)
+        $topProductData = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_sold'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_sold')
+            ->first();
+
+        $mostValuedProduct = null;
+        if ($topProductData) {
+            $mostValuedProduct = Product::find($topProductData->product_id);
+            $mostValuedProduct->total_sold = $topProductData->total_sold;
+        }
+
         return view('Pages.Index', [
             'products' => $featuredProducts,
             'categories' => $categories,
-            'setting' => $setting
+            'setting' => $setting,
+            'mostValuedProduct' => $mostValuedProduct
         ]);
     }
 
@@ -331,6 +366,39 @@ class ProductController extends Controller
         $all_categories = Categories::all();
         return view('Admin.AllCategories', compact('all_categories'));
     }
+
+    // Show the edit form
+    public function edit($id)
+    {
+        $category = Categories::findOrFail($id);
+        return view('Admin.EditCategory', compact('category'));
+    }
+
+    // Handle update
+    public function update(Request $request, $id)
+    {
+        $category = Categories::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|boolean',
+        ]);
+
+        $category->name = $request->name;
+        $category->status = $request->status;
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/categories'), $imageName);
+            $category->image = 'images/categories/' . $imageName;
+        }
+
+        $category->save();
+
+        return redirect()->route('showall_category.admin')->with('success', 'Category updated successfully.');
+    }
+
     
     public function ShowMostOrderItemstoAdmin()
     {               
@@ -404,6 +472,7 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
+
 
 
 }
