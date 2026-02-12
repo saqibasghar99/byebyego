@@ -22,8 +22,8 @@
                     <img src="https://via.placeholder.com/180x45?text=ShopEase" alt="ShopEase" class="logo-img">
                 </a> -->
 
-                <a class="navbar-brand" href="/" style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.4rem; text-decoration: none;">
-                    <img src="{{ asset('images/logo.png') }}" alt="ShopEase" class="logo-img">
+                <a class="navbar-brand shadow-none" href="/" style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.4rem; text-decoration: none;">
+                    <img src="{{ asset('img/3.png') }}" alt="ShopEase" class="logo-img shadow-none">
                 </a>
 
                 <!-- Category Toggle Button -->

@@ -15,8 +15,6 @@
     /* background: var(--gradient); */
     color: white;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding: 3rem 0;
-    margin-bottom: 3rem;
     border-radius: 0 0 20px 20px;
     /* box-shadow: 0 10px 30px -10px rgba(59, 71, 122, 0.3); */
 }
@@ -36,17 +34,16 @@
 
 .order-card {
     background: white;
-    border-radius: 16px;
+    /* border-radius: 16px; */
     overflow: hidden;
     box-shadow: var(--card-shadow);
     transition: all 0.3s ease;
-    margin-bottom: 2rem;
     border: none;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .order-card:hover {
-    transform: translateY(-5px);
+    /* transform: translateY(-5px); */
     box-shadow: var(--hover-shadow);
 }
 

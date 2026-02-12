@@ -42,7 +42,6 @@
 .logo-img {
     height: 42px;
     transition: var(--transition);
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .navbar-brand:hover .logo-img {

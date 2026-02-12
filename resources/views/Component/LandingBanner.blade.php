@@ -256,8 +256,8 @@
             }
 
             .main-headline {
-                margin-top: 20px;
-                font-size: 1.6rem;
+                margin-top: 22px;
+                font-size: 1.5rem;
             }
 
             .tagline {
@@ -394,6 +394,8 @@
 
     <!-- Bootstrap JS Bundle -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
         // Add interactive effects
