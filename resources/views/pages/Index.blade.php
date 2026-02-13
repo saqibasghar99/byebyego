@@ -17,7 +17,7 @@
 <body>
 
 <!-- Header -->
-@include('component.header')
+@include('component.Header')
 
 <!-- Hero Banner -->
 
