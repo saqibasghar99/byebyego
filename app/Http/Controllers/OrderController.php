@@ -174,7 +174,7 @@ class OrderController extends Controller
 
     public function all_orders(){
         $all_orders = Orders::all();
-        return view('Admin.allOrders', compact('all_orders'));
+        return view('admin.allOrders', compact('all_orders'));
     }
 
     public function update_order_status(Request $request, $id){
@@ -239,7 +239,7 @@ class OrderController extends Controller
         $all_fee = Feefixer::all();  
         $feefix_update = Feefixer::first();
 
-        return view('Admin.FeeFixer', compact('all_fee', 'feefix_update'));
+        return view('admin.FeeFixer', compact('all_fee', 'feefix_update'));
     }
 
 
@@ -281,7 +281,7 @@ class OrderController extends Controller
             $totalProfit += $profit;
         }
 
-        return view('Admin.Profit', [
+        return view('admin.Profit', [
             'profits' => $profitData,
             'totalProfit' => $totalProfit
         ]);
@@ -320,20 +320,20 @@ class OrderController extends Controller
         $barcode = DNS1D::getBarcodeHTML($order->order_number, 'C128', 1.0, 40);
         $shippingAddress = $order->shipping_address ?? $order->billing_address;
 
-        return view('Component.ShippingLabel', compact('order', 'barcode', 'shippingAddress'));
+        return view('component.ShippingLabel', compact('order', 'barcode', 'shippingAddress'));
     }
 
     public function showOrderByNumber($order_number)
     {
         $order = Orders::where('order_number', $order_number)->with(['items.product.specifications'])->firstOrFail();
-        return view('Pages.PurchaseHistory', compact('order'));
+        return view('pages.PurchaseHistory', compact('order'));
     }
 
 
     public function OrderEdit($id)
     {
         $order = Orders::findOrFail($id);
-        return view('Admin.editOrder', compact('order'));
+        return view('admin.editOrder', compact('order'));
     }
 
     public function OrderEditUpdate(Request $request, $id)

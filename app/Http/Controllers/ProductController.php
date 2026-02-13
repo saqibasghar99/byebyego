@@ -93,7 +93,7 @@ class ProductController extends Controller
     public function ShowCategories()
     {
         $categories = Categories::where('status', 1)->get(); // only active
-        return view('Admin.Productlisting', compact('categories'));
+        return view('admin.Productlisting', compact('categories'));
     }
 
     // Optional: Show products for a category
@@ -296,7 +296,7 @@ class ProductController extends Controller
             $mostValuedProduct->total_sold = $topProductData->total_sold;
         }
 
-        return view('Pages.Index', [
+        return view('pages.Index', [
             'products' => $featuredProducts,
             'categories' => $categories,
             'setting' => $setting,
@@ -329,7 +329,7 @@ class ProductController extends Controller
 
         $categories = Categories::where('status', 1)->get();
 
-        return view('Pages.Category', [
+        return view('pages.Category', [
             'products' => $products,
             'category' => $categoryObj->name,
             'categories' => $categories
@@ -347,7 +347,7 @@ class ProductController extends Controller
                                  ->limit(4)
                                  ->get();
         
-        return view('Pages.shopdetail', [
+        return view('pages.shopdetail', [
             'products' => $product, 
             'relatedProducts' => $relatedProducts
         ]);
@@ -357,21 +357,21 @@ class ProductController extends Controller
     {
 
         $all_products = Product::all();
-        return view('Admin.AllProducts', compact('all_products'));
+        return view('admin.AllProducts', compact('all_products'));
     }
 
     public function ShowAllCategoriestoAdmin()
     {
 
         $all_categories = Categories::all();
-        return view('Admin.AllCategories', compact('all_categories'));
+        return view('admin.AllCategories', compact('all_categories'));
     }
 
     // Show the edit form
     public function edit($id)
     {
         $category = Categories::findOrFail($id);
-        return view('Admin.EditCategory', compact('category'));
+        return view('admin.EditCategory', compact('category'));
     }
 
     // Handle update
@@ -404,14 +404,14 @@ class ProductController extends Controller
     {               
 
         $most_order_items = OrderItem::all();
-        return view('Admin.MostOrderItems', compact('most_order_items'));
+        return view('admin.MostOrderItems', compact('most_order_items'));
     }
 
     public function EditProduct($id)
     {
         $products = Product::findOrFail($id);
         $categories = Categories::all();
-        return view('Admin.UpdateProduct', compact('products', 'categories'));
+        return view('admin.UpdateProduct', compact('products', 'categories'));
     }
 
     public function deleteProduct(Request $request, $id){

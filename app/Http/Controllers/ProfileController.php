@@ -34,7 +34,7 @@ class ProfileController extends Controller
                 ->sum('total_amount'),
         ];
 
-        return view('Pages.Profile', [
+        return view('pages.Profile', [
             'user' => $user,
             'stats' => $stats,
             'member_since' => date('F j, Y', strtotime($user->created_at)),

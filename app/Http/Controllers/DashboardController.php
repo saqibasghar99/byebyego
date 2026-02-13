@@ -61,7 +61,7 @@ class DashboardController extends Controller
         // To display todays orders
         $todayOrders = Orders::whereDate('created_at', Carbon::today())->get();
 
-        return view('Admin.Dashboard', compact('total_orders', 'totalProfit', 'total_customers', 'salesGrowth', 'currentMonthSales', 'previousMonthSales', 'selled_products', 'todayOrders'));
+        return view('admin.Dashboard', compact('total_orders', 'totalProfit', 'total_customers', 'salesGrowth', 'currentMonthSales', 'previousMonthSales', 'selled_products', 'todayOrders'));
     }
 
 
