@@ -190,8 +190,8 @@ Route::get('/shop-detail', fn() => view('Pages.Shopdetail'));
 | Authentication Routes
 |--------------------------------------------------------------------------
 */
-Route::view('/signup', 'Auth.Signup');
-Route::view('/signin', 'Auth.Signin')->name('signin');
+Route::view('/signup', 'auth.signup');
+Route::view('/signin', 'auth.signin')->name('signin');
 Route::post('/signup', [AuthController::class, 'Signup'])->name('signup');
 Route::post('/signin', [AuthController::class, 'Signin'])->name('signin-in');
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
