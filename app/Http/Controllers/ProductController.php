@@ -296,7 +296,7 @@ class ProductController extends Controller
             $mostValuedProduct->total_sold = $topProductData->total_sold;
         }
 
-        return view('pages.Index', [
+        return view('pages.index', [
             'products' => $featuredProducts,
             'categories' => $categories,
             'setting' => $setting,
@@ -329,7 +329,7 @@ class ProductController extends Controller
 
         $categories = Categories::where('status', 1)->get();
 
-        return view('pages.Category', [
+        return view('pages.category', [
             'products' => $products,
             'category' => $categoryObj->name,
             'categories' => $categories
@@ -357,21 +357,21 @@ class ProductController extends Controller
     {
 
         $all_products = Product::all();
-        return view('admin.AllProducts', compact('all_products'));
+        return view('admin.allProducts', compact('all_products'));
     }
 
     public function ShowAllCategoriestoAdmin()
     {
 
         $all_categories = Categories::all();
-        return view('admin.AllCategories', compact('all_categories'));
+        return view('admin.allCategories', compact('all_categories'));
     }
 
     // Show the edit form
     public function edit($id)
     {
         $category = Categories::findOrFail($id);
-        return view('admin.EditCategory', compact('category'));
+        return view('admin.editCategory', compact('category'));
     }
 
     // Handle update
@@ -404,14 +404,14 @@ class ProductController extends Controller
     {               
 
         $most_order_items = OrderItem::all();
-        return view('admin.MostOrderItems', compact('most_order_items'));
+        return view('admin.mostOrderItems', compact('most_order_items'));
     }
 
     public function EditProduct($id)
     {
         $products = Product::findOrFail($id);
         $categories = Categories::all();
-        return view('admin.UpdateProduct', compact('products', 'categories'));
+        return view('admin.updateProduct', compact('products', 'categories'));
     }
 
     public function deleteProduct(Request $request, $id){
