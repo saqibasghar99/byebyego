@@ -292,12 +292,13 @@
             </div>
             <h4 class="empty-title">No Orders Yet</h4>
             <p class="empty-text">You haven't placed any orders with us yet. Start shopping to discover amazing products!</p>
-            <a href="/">
-                <button class="btn-explore">
-                    <span class="material-symbols-outlined fs-3">shopping_cart</span>
+            <a href="/" class="text-decoration-none">
+                <button class="btn-explore d-flex align-items-center justify-content-center gap-2 m-auto">
+                    <span class="material-symbols-outlined">shopping_cart</span>
                     Start Shopping
                 </button>
             </a>
+
         </div>
     @endif
     

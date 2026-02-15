@@ -269,16 +269,49 @@
             }
         }
 
-        .product-showcase img {
+        /* .product-showcase img {
             max-width: 100%;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             clip-path: ellipse(70% 50% at 50% 50%);
             transition: transform 0.3s ease;
+        } */
+
+        .product-showcase img {
+            max-width: 100%;
+            border-radius: 50%; /* make circular/floating */
+            object-fit: cover;
+
+            /* Mask for 360° fade */
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+
+            /* Smooth edges */
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transition: transform 0.4s ease;
         }
 
-        .product-showcase img:hover {
-            transform: scale(1.05) rotate(1deg);
+        @keyframes rotateClockwise {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
+
+
+        .product-showcase img:hover {
+            transform: scale(1) rotate(1deg);
+        }
+
+        
 
 	.fast-delivery{
             background: rgba(255, 255, 255, 0.05);
@@ -328,8 +361,10 @@
                                 </div>
 
                             @else
-                                <div class="price-label">Fast Delivery</div>
-                                <div class="price-value text-black" style="font-size: 16px; ">Get your orders delivered quickly with our express shipping options.</span></div>
+                                <div class="fast-delivery">
+                                    <div class="price-label">Fast Delivery</div>
+                                    <div class="price-value text-black" style="font-size: 16px; ">Get your orders delivered quickly with our express shipping options.</span></div>
+                                </div>
                             @endif
                         </div>
 
@@ -399,7 +434,7 @@
 
     <!-- Bootstrap JS Bundle -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
 
     <script>
