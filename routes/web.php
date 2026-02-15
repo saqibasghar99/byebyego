@@ -183,7 +183,7 @@ Route::get('/not-found', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/', [ProductController::class, 'ShowProducts'])->name('index.page');
-Route::get('/shop-detail', fn() => view('Pages.Shopdetail'));
+Route::get('/shop-detail', fn() => view('pages.shopdetail'));
 
 /*
 |--------------------------------------------------------------------------
@@ -347,11 +347,11 @@ Route::prefix('product/{productId}/specifications')->group(function () {
 | Blade View Routes (For Admin)
 |--------------------------------------------------------------------------
 */
-Route::view('/add-category', 'admin.Addcategory')->middleware('admin');
-Route::view('/add_fee_fixer', 'admin.NewFeeFixer')->middleware('admin');
-Route::view('/edit-product', 'admin.UpdateProduct')->middleware('admin');
-Route::view('/list-product', 'admin.Productlisting')->middleware('admin');
-Route::view('/list-category', 'admin.Addcategory')->middleware('admin');
+Route::view('/add-category', 'admin.addcategory')->middleware('admin');
+Route::view('/add_fee_fixer', 'admin.newFeeFixer')->middleware('admin');
+Route::view('/edit-product', 'admin.updateProduct')->middleware('admin');
+Route::view('/list-product', 'admin.productlisting')->middleware('admin');
+Route::view('/list-category', 'admin.addcategory')->middleware('admin');
 
 Route::get('/landing-banner', [WebsiteSettingController::class, 'edit'])->middleware('admin')->name('admin.landing.edit');
 Route::match(['post','put'], '/landing-banner', [WebsiteSettingController::class, 'update'])->middleware('admin')->name('admin.landing.update');
