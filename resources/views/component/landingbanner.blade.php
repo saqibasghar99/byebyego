@@ -151,8 +151,8 @@
             background: var(--accent-color);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
+            padding: 8px 25px;
+            border-radius: 4px;
             font-weight: 600;
             transition: all 0.3s;
         }
