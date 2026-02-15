@@ -280,6 +280,11 @@
             transform: scale(1.05) rotate(1deg);
         }
 
+	.fast-delivery{
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+        }
         
     </style>
 </head>
@@ -297,7 +302,7 @@
                 <div class="col-lg-6">
                     <div class="banner-content">
                         
-                        @if($setting->show_hero_text)
+                        @if($setting && $setting->show_hero_text)
                         <h1 class="main-headline" style="color: {{ $setting->hero_title_color ?? '#ffffff' }};">
                             {!! $setting->hero_title ?? 'Shop Smart, Save Time' !!}<br>
                             <span style="color: {{ $setting->hero_subtitle_color ?? '#ffffff' }};">
@@ -324,18 +329,18 @@
 
                             @else
                                 <div class="price-label">Fast Delivery</div>
-                                <div class="price-value">Get your orders delivered quickly with our express shipping options.</span></div>
+                                <div class="price-value text-black" style="font-size: 16px; ">Get your orders delivered quickly with our express shipping options.</span></div>
                             @endif
                         </div>
 
-                        @if($setting->hero_subtitle_line)
+                        @if($setting && $setting->hero_subtitle_line)
                         <p class="partner-text" style="color: {{ $setting->hero_subtitle_line_color ?? '#ffffff' }};">
                             {!! $setting->hero_subtitle_line ?? 'Invest in quality, enjoy every purchase, experience shopping reimagined.' !!}
                         </p>
                         @endif
                         
                         <div class="cta-buttons">
-                            @if($setting->show_hero_button)
+                            @if($setting && $setting->show_hero_button)
                             <button class="btn-investigate">
                                 <i class="fas fa-search me-2"></i> {{ $setting->hero_button_text ?? 'Shop Now' }}
                             </button>
