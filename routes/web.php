@@ -170,11 +170,11 @@ use Illuminate\Support\Facades\Artisan;
 |--------------------------------------------------------------------------
 */
 Route::fallback(function () {
-    return response()->view('component.Error404', [], 404);
+    return response()->view('component.error404', [], 404);
 });
 
 Route::get('/not-found', function () {
-    return response()->view('component.Error404', [], 404);
+    return response()->view('component.error404', [], 404);
 })->name('404');
 
 /*
@@ -347,11 +347,11 @@ Route::prefix('product/{productId}/specifications')->group(function () {
 | Blade View Routes (For Admin)
 |--------------------------------------------------------------------------
 */
-Route::view('/add-category', 'Admin.Addcategory')->middleware('admin');
-Route::view('/add_fee_fixer', 'Admin.NewFeeFixer')->middleware('admin');
-Route::view('/edit-product', 'Admin.UpdateProduct')->middleware('admin');
-Route::view('/list-product', 'Admin.Productlisting')->middleware('admin');
-Route::view('/list-category', 'Admin.Addcategory')->middleware('admin');
+Route::view('/add-category', 'admin.Addcategory')->middleware('admin');
+Route::view('/add_fee_fixer', 'admin.NewFeeFixer')->middleware('admin');
+Route::view('/edit-product', 'admin.UpdateProduct')->middleware('admin');
+Route::view('/list-product', 'admin.Productlisting')->middleware('admin');
+Route::view('/list-category', 'admin.Addcategory')->middleware('admin');
 
 Route::get('/landing-banner', [WebsiteSettingController::class, 'edit'])->middleware('admin')->name('admin.landing.edit');
 Route::match(['post','put'], '/landing-banner', [WebsiteSettingController::class, 'update'])->middleware('admin')->name('admin.landing.update');
@@ -360,7 +360,7 @@ Route::match(['post','put'], '/landing-banner', [WebsiteSettingController::class
 // dummy admin creation routes
 
 Route::get('/admin-to-admin', function() {
-    return view('Auth.AdminSignup');
+    return view('auth.AdminSignup');
 })->name('admin-to-admin');
 Route::post('/admin-to-admin', [AuthController::class, 'AdminSignup'])->name('admin-to-admin-new');
 
