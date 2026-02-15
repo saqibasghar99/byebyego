@@ -11,7 +11,7 @@ class ProductSpecificationController extends Controller
     public function create($productId)
     {
         $product = Product::findOrFail($productId);
-        return view('product_specifications.Create', compact('product'));
+        return view('product_specifications.create', compact('product'));
     }
 
     // Store the specifications in the database
@@ -46,7 +46,7 @@ class ProductSpecificationController extends Controller
     {
         $product = Product::findOrFail($productId);
         $specifications = $product->specifications;
-        return view('product_specifications.Edit', compact('product', 'specifications'));
+        return view('product_specifications.edit', compact('product', 'specifications'));
     }
 
     // Update the specifications in the database

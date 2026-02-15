@@ -61,7 +61,7 @@ class GoogleController extends Controller
     public function showPasswordForm($userId)
     {
         $user = User::findOrFail($userId);
-        return view('admin.SetPassword', compact('user'));
+        return view('admin.setPassword', compact('user'));
     }
 
     // Update password after user sets it

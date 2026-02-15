@@ -239,7 +239,7 @@ class OrderController extends Controller
         $all_fee = Feefixer::all();  
         $feefix_update = Feefixer::first();
 
-        return view('admin.FeeFixer', compact('all_fee', 'feefix_update'));
+        return view('admin.feeFixer', compact('all_fee', 'feefix_update'));
     }
 
 
@@ -281,7 +281,7 @@ class OrderController extends Controller
             $totalProfit += $profit;
         }
 
-        return view('admin.Profit', [
+        return view('admin.profit', [
             'profits' => $profitData,
             'totalProfit' => $totalProfit
         ]);
@@ -320,13 +320,13 @@ class OrderController extends Controller
         $barcode = DNS1D::getBarcodeHTML($order->order_number, 'C128', 1.0, 40);
         $shippingAddress = $order->shipping_address ?? $order->billing_address;
 
-        return view('component.ShippingLabel', compact('order', 'barcode', 'shippingAddress'));
+        return view('component.shippingLabel', compact('order', 'barcode', 'shippingAddress'));
     }
 
     public function showOrderByNumber($order_number)
     {
         $order = Orders::where('order_number', $order_number)->with(['items.product.specifications'])->firstOrFail();
-        return view('pages.PurchaseHistory', compact('order'));
+        return view('pages.purchaseHistory', compact('order'));
     }
 
 

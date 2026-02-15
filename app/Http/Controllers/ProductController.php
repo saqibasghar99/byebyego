@@ -93,7 +93,7 @@ class ProductController extends Controller
     public function ShowCategories()
     {
         $categories = Categories::where('status', 1)->get(); // only active
-        return view('admin.Productlisting', compact('categories'));
+        return view('admin.productlisting', compact('categories'));
     }
 
     // Optional: Show products for a category

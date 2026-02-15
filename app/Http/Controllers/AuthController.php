@@ -73,7 +73,7 @@ class AuthController extends Controller
 
     public function getallUsers(){
         $all_users = User::all();
-        return view('admin.AllUsers', compact('all_users'));
+        return view('admin.allUsers', compact('all_users'));
     }
 
 
@@ -133,7 +133,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8',]
-        ]);
+    ]);
 
         if($validator->fails()){
             return redirect()->route('admin-to-admin')->withErrors($validator)->withInput();
