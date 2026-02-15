@@ -73,7 +73,7 @@ class AuthController extends Controller
 
     public function getallUsers(){
         $all_users = User::all();
-        return view('admin.allUsers', compact('all_users'));
+        return view('admin.AllUsers', compact('all_users'));
     }
 
 
